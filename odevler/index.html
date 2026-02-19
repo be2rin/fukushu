@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BE2RİN | Ödevler</title>
+    <link rel="icon" type="image/png" href="kan.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- ANA SAYFA (INDEX) İLE BİREBİR EŞİTLENMİŞ TASARIM --- */
+        :root {
+            --primary-color: #b208d1;
+            --bg-color: #0f0c29;
+            --text-color: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVİGASYON: INDEX İLE MİLİMETRİK AYNI --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px; /* INDEX İLE AYNI */
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px; /* INDEX İLE AYNI */
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* Logo kaymasını önlemek için index ile aynı tutuldu */
+        }
+
+        nav ul { display: flex; list-style: none; flex-wrap: wrap; }
+        nav ul li { margin-left: 20px; }
+
+        /* BUTON VE LİNK STİLLERİ (BOŞLUKLAR INDEX İLE EŞİTLENDİ) */
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white !important;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: 500;
+            padding: 10px; /* BURASI 15px'Dİ, INDEX'TEKİ GİBİ 10px YAPILDI - KAYMAYI BU ÇÖZER */
+            transition: color 0.3s, text-shadow 0.3s;
+            font-family: inherit;
+            text-decoration: none !important;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            color: var(--primary-color) !important;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        /* --- İÇERİK TASARIMI --- */
+        main {
+            flex: 1;
+            padding: 60px 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-content { animation: fadeIn 0.4s ease-in-out; text-align: center; }
+        h1 { font-size: 3.5rem; color: var(--primary-color); margin-bottom: 40px; }
+        
+        .ders-btn {
+            display: flex; align-items: center; gap: 20px; width: 100%; padding: 25px; margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1); color: white; font-size: 1.4rem; border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px; cursor: pointer; transition: 0.2s; text-align: left;
+        }
+        .ders-btn:hover { background: var(--primary-color); transform: translateX(10px); color: #fff; }
+
+        .back-btn {
+            background: #d63031; color: white; border: none; padding: 12px 25px; border-radius: 8px;
+            cursor: pointer; font-size: 1.1rem; margin-bottom: 25px; display: inline-flex; align-items: center; gap: 10px;
+        }
+
+        #iframe-container { border: 2px solid var(--primary-color); border-radius: 10px; overflow: hidden; background: black; margin-top: 20px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+   <nav>
+    <div class="logo">BE2RİN</div>
+    <ul>
+        <li><a href="/fukushu/anasayfa" class="nav-btn">ANA SAYFA</a></li>
+        
+        <li><a href="/fukushu/odevler" class="nav-btn">ÖDEVLERİM</a></li>
+        
+        <li><a href="/fukushu/fukushu" class="nav-btn">FUKUSHU</a></li>
+        
+        <li><a href="/fukushu/baglantilar" class="nav-btn">BAĞLANTILAR</a></li>
+    </ul>
+</nav>
+
+    <main>
+        <div class="page-content">
+            <div id="dersler-listesi">
+                <h1>Ödevler ve Sunumlar</h1>
+                <p style="font-size: 1.3rem; color: #ccc;">İçeriğini görmek istediğiniz dersi seçiniz:</p>
+                <button class="ders-btn" onclick="dersAc('siyasi')"><i class="fas fa-globe"></i> Siyasi Coğrafya</button>
+                <button class="ders-btn" onclick="dersAc('sistem')"><i class="fas fa-book"></i> Türk Eğitim Sistemi ve Okul Yönetimi</button>
+                <button class="ders-btn" onclick="dersAc('olcme')"><i class="fas fa-chart-line"></i> Eğitimde Ölçme ve Değerlendirme</button>
+            </div>
+
+            <div id="ders-siyasi" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
+                <h1>Siyasi Coğrafya</h1>
+                <button class="ders-btn" onclick="icerikAc('video1')"><i class="fas fa-play-circle"></i> Video 1</button>
+                <button class="ders-btn" onclick="icerikAc('video2')"><i class="fas fa-play-circle"></i> Video 2</button>
+            </div>
+
+            <div id="ders-sistem" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
+                <h1>Türk Eğitim Sistemi</h1>
+                <button class="ders-btn" onclick="alert('SÜLEYMAN TÜRKER İNFAZ VİDEOSU.')">Sunum</button>
+            </div>
+
+            <div id="ders-olcme" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
+                <h1>Eğitimde Ölçme ve Değerlendirme</h1>
+                <button class="ders-btn" onclick="alert('MUHAMMET ÖZDAĞHANLI İNFAZ VİDEOSU.')">Sunum</button>
+            </div>
+
+            <div id="video-oynatici-alani" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="dersAc('siyasi')"><i class="fas fa-arrow-left"></i> Listeye Dön</button></div>
+                <div id="iframe-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    function dersAc(dersId) {
+        document.querySelectorAll('main > div > div').forEach(div => div.style.display = 'none');
+        const selected = document.getElementById('ders-' + dersId);
+        if(selected) { selected.style.display = 'block'; }
+        document.getElementById('dersler-listesi').style.display = 'none';
+        document.getElementById('video-oynatici-alani').style.display = 'none';
+    }
+
+    function anaListeyeDon() {
+        document.getElementById('ders-siyasi').style.display = 'none';
+        document.getElementById('ders-sistem').style.display = 'none';
+        document.getElementById('ders-olcme').style.display = 'none';
+        document.getElementById('video-oynatici-alani').style.display = 'none';
+        document.getElementById('dersler-listesi').style.display = 'block';
+    }
+
+    function icerikAc(videoKodu) {
+        document.getElementById('ders-siyasi').style.display = 'none';
+        document.getElementById('video-oynatici-alani').style.display = 'block';
+        const container = document.getElementById('iframe-container');
+        if(videoKodu === 'video1') {
+            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/3PPSe8/embed" width="100%" height="600" frameborder="0" allowfullscreen></iframe>';
+        } else if(videoKodu === 'video2') {
+            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/BKSx5Z/embed" width="100%" height="600" frameborder="0" allowfullscreen></iframe>';
+        }
+    }
+    </script>
+</body>
+</html>
