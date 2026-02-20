@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* --- NAVİGASYON (INDEX İLE MİLİMETRİK AYNI) --- */
+        /* --- NAVİGASYON --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -103,6 +103,37 @@
             line-height: 1.8;
         }
 
+        /* --- MOBİL UYUMLULUK (EKLEDİM) --- */
+        @media (max-width: 850px) {
+            nav {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+            }
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+                gap: 5px;
+            }
+            nav ul li {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-btn {
+                display: block;
+                width: 100%;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            h1 { font-size: 2.5rem; }
+            p.subtitle { font-size: 1.2rem; }
+            .quote-box { padding: 25px; border-left-width: 4px; }
+            .quote-title { font-size: 1.3rem; }
+            .quote-text { font-size: 1rem; line-height: 1.6; }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -149,4 +180,5 @@
     </main>
 
 </body>
+</html>
 </html>
