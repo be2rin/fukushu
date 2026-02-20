@@ -228,7 +228,7 @@
 
         // --- EASTER EGG SİSTEMİ (dudu) ---
         let inputBuffer = "";
-        const secretCode = "dudu";
+        const secretCode = "fukushu";
 
         document.addEventListener('keydown', (e) => {
             inputBuffer += e.key.toLowerCase();
@@ -240,7 +240,7 @@
             if (inputBuffer === secretCode) {
                 const audio = document.getElementById('easterEggAudio');
                 audio.currentTime = 0;
-                audio.play();
+                audio.play(Sopayı soktum ben tam kıçına.mp3);
                 
                 // Ekranı anlık mor parlat
                 document.body.style.boxShadow = "inset 0 0 100px #b208d1";
