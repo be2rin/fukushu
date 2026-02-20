@@ -19,12 +19,15 @@
         .nav-btn { color: white !important; font-size: 1.1rem; font-weight: 500; padding: 10px; transition: 0.3s; text-decoration: none !important; }
         .nav-btn:hover { color: var(--primary-color) !important; text-shadow: 0 0 10px var(--primary-color); }
 
-        /* --- GALERİ GRID (1 SATIRDA 5 GÖRSEL) --- */
+        /* --- GALERİ GRID --- */
         main { flex: 1; padding: 40px 20px; width: 100%; max-width: 1400px; margin: 0 auto; text-align: center; }
+        
+        /* PARLAMA SİLİNDİ, MOR RENK SABİTLENDİ */
+        h1 { font-size: 3rem; color: var(--primary-color); margin-bottom: 30px; text-shadow: none; }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 5 Sütun Ayarı */
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
         }
 
@@ -71,7 +74,7 @@
         .next-lb { right: 30px; top: 50%; transform: translateY(-50%); }
         .close-lb:hover, .prev-lb:hover, .next-lb:hover { color: var(--primary-color); }
 
-        /* --- MOBİL AYAR (Sıkıntı Çıkmasın Diye) --- */
+        /* --- MOBİL AYAR --- */
         @media (max-width: 1024px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { 
             nav { padding: 15px; flex-direction: column; height: auto; }
@@ -99,9 +102,9 @@
     <main>
         <h1>GALERİ</h1>
         <div class="gallery-grid">
-            <div class="gallery-item"><img src="../deneme.jpg" onclick="openLightbox(0)"></div>
-            <div class="gallery-item"><img src="../lmao.jpg" onclick="openLightbox(1)"></div>
-            <div class="gallery-item"><img src="../Nokia Dudu Zil Sesi.mp4" onclick="openLightbox(2)"></div>
+            <div class="gallery-item"><img src="deneme.jpg" onclick="openLightbox(0)"></div>
+            <div class="gallery-item"><img src="lmao.jpg" onclick="openLightbox(1)"></div>
+            <div class="gallery-item"><img src="Nokia Dudu Zil Sesi.mp4" onclick="openLightbox(2)"></div>
             <div class="gallery-item"><img src="../resim4.jpg" onclick="openLightbox(3)"></div>
             <div class="gallery-item"><img src="../resim5.jpg" onclick="openLightbox(4)"></div>
             <div class="gallery-item"><img src="../resim6.jpg" onclick="openLightbox(5)"></div>
