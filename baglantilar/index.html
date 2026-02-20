@@ -28,17 +28,15 @@
 
         /* --- NEON İMLEÇ TASARIMI --- */
         .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out, background 0.2s ease;
-            box-shadow: 0 0 15px var(--primary-color), inset 0 0 10px var(--primary-color);
-            transform: translate(-50%, -50%);
-            display: block;
+           .custom-cursor {
+    background-image: url('limon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none; /* Eski halkayı sildik */
+    box-shadow: none; /* Eski parlamayı sildik */
+    width: 32px; /* Resmin boyutuna göre ayarla */
+    height: 32px;
+};
         }
         .cursor-hover { 
             transform: translate(-50%, -50%) scale(2.5); 
