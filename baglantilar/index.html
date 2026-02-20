@@ -13,7 +13,8 @@
             --text-color: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* İmleci PC'de gizle */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,6 +23,26 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* --- NEON İMLEÇ TASARIMI --- */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out, background 0.2s ease;
+            box-shadow: 0 0 15px var(--primary-color), inset 0 0 10px var(--primary-color);
+            transform: translate(-50%, -50%);
+            display: block;
+        }
+        .cursor-hover { 
+            transform: translate(-50%, -50%) scale(2.5); 
+            background: rgba(178, 8, 209, 0.2); 
         }
 
         /* --- NAVİGASYON --- */
@@ -107,8 +128,10 @@
             border-color: var(--primary-color);
         }
 
-        /* --- MOBİL UYUMLULUK (BURAYI EKLEDİM) --- */
+        /* --- MOBİL UYUMLULUK --- */
         @media (max-width: 850px) {
+            * { cursor: auto !important; } /* Mobilde gerçek imleci geri getir */
+            .custom-cursor { display: none; }
             nav {
                 flex-direction: column;
                 height: auto;
@@ -136,7 +159,7 @@
             
             .social-grid {
                 gap: 15px;
-                flex-wrap: wrap; /* Butonlar sığmazsa alt satıra geçer */
+                flex-wrap: wrap;
             }
             .social-btn {
                 width: 60px;
@@ -153,7 +176,13 @@
 </head>
 <body>
 
-  <nav>
+    <div class="custom-cursor"></div>
+
+    <audio id="easterEggAudio">
+        <source src="../dudu.mp3" type="audio/mpeg">
+    </audio>
+
+    <nav>
         <div class="logo">BE2RİN</div>
         <ul>
             <li><a href="/fukushu/anasayfa" class="nav-btn">ANA SAYFA</a></li>
@@ -181,5 +210,47 @@
         </div>
     </main>
 
+    <script>
+        // --- İMLEÇ HAREKET KODLARI ---
+        const cursor = document.querySelector('.custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Butonlara gelince imleci büyüt
+        const hoverElements = document.querySelectorAll('a, button, .social-btn');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+        // --- EASTER EGG SİSTEMİ (dudu) ---
+        let inputBuffer = "";
+        const secretCode = "dudu";
+
+        document.addEventListener('keydown', (e) => {
+            inputBuffer += e.key.toLowerCase();
+            
+            if (inputBuffer.length > secretCode.length) {
+                inputBuffer = inputBuffer.substring(inputBuffer.length - secretCode.length);
+            }
+
+            if (inputBuffer === secretCode) {
+                const audio = document.getElementById('easterEggAudio');
+                audio.currentTime = 0;
+                audio.play();
+                
+                // Ekranı anlık mor parlat
+                document.body.style.boxShadow = "inset 0 0 100px #b208d1";
+                setTimeout(() => {
+                    document.body.style.boxShadow = "none";
+                }, 500);
+                
+                inputBuffer = "";
+            }
+        });
+    </script>
 </body>
 </html>
