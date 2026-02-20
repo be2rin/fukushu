@@ -7,141 +7,80 @@
     <link rel="icon" type="image/png" href="../kan.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #b208d1;
-            --bg-color: #0f0c29;
-            --text-color: #ffffff;
-        }
-
+        :root { --primary-color: #b208d1; --bg-color: #0f0c29; --text-color: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --- NAVİGASYON (TÜM SİSTEMLE AYNI) --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            height: 80px;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
+        /* --- NAVİGASYON --- */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: rgba(0, 0, 0, 0.8); border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; z-index: 1000; height: 80px; }
+        .logo { font-size: 2rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; }
         nav ul { display: flex; list-style: none; }
         nav ul li { margin-left: 20px; }
+        .nav-btn { color: white !important; font-size: 1.1rem; font-weight: 500; padding: 10px; transition: 0.3s; text-decoration: none !important; }
+        .nav-btn:hover { color: var(--primary-color) !important; text-shadow: 0 0 10px var(--primary-color); }
 
-        .nav-btn {
-            text-decoration: none !important;
-            color: white !important;
-            font-size: 1.2rem;
-            font-weight: 500;
-            padding: 10px;
-            transition: 0.3s;
-            display: inline-block;
-        }
-
-        .nav-btn:hover {
-            color: var(--primary-color) !important;
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-
-        /* --- GALERİ TASARIMI --- */
-        main {
-            flex: 1;
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        h1 { font-size: 3.5rem; color: var(--primary-color); margin-bottom: 20px; text-shadow: 0 0 20px rgba(178, 8, 209, 0.5); }
-        p { font-size: 1.3rem; color: #ccc; margin-bottom: 50px; }
+        /* --- GALERİ GRID (1 SATIRDA 5 GÖRSEL) --- */
+        main { flex: 1; padding: 40px 20px; width: 100%; max-width: 1400px; margin: 0 auto; text-align: center; }
+        h1 { font-size: 3rem; color: var(--primary-color); margin-bottom: 30px; text-shadow: 0 0 15px var(--primary-color); }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 20px 0;
+            grid-template-columns: repeat(5, 1fr); /* 5 Sütun Ayarı */
+            gap: 15px;
         }
 
         .gallery-item {
             position: relative;
+            aspect-ratio: 1 / 1;
             overflow: hidden;
-            border-radius: 15px;
-            border: 2px solid rgba(178, 8, 209, 0.3);
-            transition: all 0.4s ease;
-            background: #000;
+            border-radius: 10px;
+            border: 2px solid rgba(178, 8, 209, 0.2);
             cursor: pointer;
-        }
-
-        /* Hover Efekti: Parlama ve Büyüme */
-        .gallery-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--primary-color);
-            box-shadow: 0 0 30px var(--primary-color);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
-            opacity: 0.7; /* Başta hafif karanlık */
-            transition: 0.4s;
-        }
-
-        .gallery-item:hover img {
-            opacity: 1; /* Üzerine gelince tam aydınlık */
-        }
-
-        .img-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            color: white;
-            font-size: 1.1rem;
-            text-align: left;
-            transform: translateY(100%);
             transition: 0.3s;
+            background: #000;
         }
 
-        .gallery-item:hover .img-caption {
-            transform: translateY(0);
+        .gallery-item:hover {
+            transform: scale(1.03);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+            z-index: 2;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.3s; }
+        .gallery-item:hover img { opacity: 1; }
+
+        /* --- LIGHTBOX (TAM EKRAN) --- */
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center;
+            z-index: 2000; padding: 20px;
         }
 
-        /* Mobil Ayar */
-        @media (max-width: 768px) {
-            nav { padding: 10px 20px; flex-direction: column; height: auto; }
-            nav ul { margin-top: 15px; flex-wrap: wrap; justify-content: center; }
-            nav ul li { margin: 5px; }
-            h1 { font-size: 2.5rem; }
+        #lightbox-content {
+            max-width: 90%; max-height: 85%;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 0 50px var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .close-lb, .prev-lb, .next-lb {
+            position: absolute; color: white; font-size: 2.5rem; cursor: pointer; transition: 0.3s;
+        }
+        .close-lb { top: 20px; right: 30px; }
+        .prev-lb { left: 30px; top: 50%; transform: translateY(-50%); }
+        .next-lb { right: 30px; top: 50%; transform: translateY(-50%); }
+        .close-lb:hover, .prev-lb:hover, .next-lb:hover { color: var(--primary-color); }
+
+        /* --- MOBİL AYAR (Sıkıntı Çıkmasın Diye) --- */
+        @media (max-width: 1024px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { 
+            nav { padding: 15px; flex-direction: column; height: auto; }
+            nav ul { margin-top: 15px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); } 
+            h1 { font-size: 2rem; }
+            .prev-lb, .next-lb { bottom: 30px; top: auto; transform: none; }
+            .prev-lb { left: 40%; } .next-lb { right: 40%; }
         }
     </style>
 </head>
@@ -150,7 +89,7 @@
     <nav>
         <div class="logo">BE2RİN</div>
         <ul>
-            <li><a href="/fukushu/anasayfa" class="nav-btn">ANA SAYFA</a></li>
+            <li><a href="/fukushu/" class="nav-btn">ANA SAYFA</a></li>
             <li><a href="/fukushu/odevler" class="nav-btn">ÖDEVLERİM</a></li>
             <li><a href="/fukushu/fukushu" class="nav-btn">FUKUSHU</a></li>
             <li><a href="/fukushu/fotograflar" class="nav-btn">FOTOĞRAFLAR</a></li>
@@ -159,29 +98,66 @@
     </nav>
 
     <main>
-        <div class="page-content">
-            <h1>GALERİ</h1>
-            <p></p>
-
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="../kan.png" alt="Açıklama">
-                    <div class="img-caption">Stardew Valley Edit #1</div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="../resim2.jpg" alt="Açıklama">
-                    <div class="img-caption">Blitzcrank Hook Master</div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="../resim3.jpg" alt="Açıklama">
-                    <div class="img-caption">Neon Nightmares</div>
-                </div>
-                
-                </div>
+        <h1>GALERİ</h1>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="../resim1.jpg" onclick="openLightbox(0)"></div>
+            <div class="gallery-item"><img src="../resim2.jpg" onclick="openLightbox(1)"></div>
+            <div class="gallery-item"><img src="../resim3.jpg" onclick="openLightbox(2)"></div>
+            <div class="gallery-item"><img src="../resim4.jpg" onclick="openLightbox(3)"></div>
+            <div class="gallery-item"><img src="../resim5.jpg" onclick="openLightbox(4)"></div>
+            <div class="gallery-item"><img src="../resim6.jpg" onclick="openLightbox(5)"></div>
+            <div class="gallery-item"><img src="../resim7.jpg" onclick="openLightbox(6)"></div>
+            <div class="gallery-item"><img src="../resim8.jpg" onclick="openLightbox(7)"></div>
+            <div class="gallery-item"><img src="../resim9.jpg" onclick="openLightbox(8)"></div>
+            <div class="gallery-item"><img src="../resim10.jpg" onclick="openLightbox(9)"></div>
+            <div class="gallery-item"><img src="../resim11.jpg" onclick="openLightbox(10)"></div>
+            <div class="gallery-item"><img src="../resim12.jpg" onclick="openLightbox(11)"></div>
+            <div class="gallery-item"><img src="../resim13.jpg" onclick="openLightbox(12)"></div>
+            <div class="gallery-item"><img src="../resim14.jpg" onclick="openLightbox(13)"></div>
+            <div class="gallery-item"><img src="../resim15.jpg" onclick="openLightbox(14)"></div>
         </div>
     </main>
 
+    <div id="lightbox">
+        <span class="close-lb" onclick="closeLightbox()">&times;</span>
+        <span class="prev-lb" onclick="changeImg(-1)">&#10094;</span>
+        <img id="lightbox-content" src="">
+        <span class="next-lb" onclick="changeImg(1)">&#10095;</span>
+    </div>
+
+    <script>
+        let currentImgIndex = 0;
+        const images = document.querySelectorAll('.gallery-item img');
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-content');
+
+        function openLightbox(index) {
+            currentImgIndex = index;
+            lb.style.display = 'flex';
+            lbImg.src = images[currentImgIndex].src;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lb.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeImg(n) {
+            currentImgIndex += n;
+            if (currentImgIndex >= images.length) currentImgIndex = 0;
+            if (currentImgIndex < 0) currentImgIndex = images.length - 1;
+            lbImg.src = images[currentImgIndex].src;
+        }
+
+        // Klavye desteği
+        document.addEventListener('keydown', (e) => {
+            if (lb.style.display === 'flex') {
+                if (e.key === 'ArrowRight') changeImg(1);
+                if (e.key === 'ArrowLeft') changeImg(-1);
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>
