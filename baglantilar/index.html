@@ -26,21 +26,23 @@
             transition: box-shadow 0.3s ease;
         }
 
-        /* --- NEON İMLEÇ TASARIMI --- */
+        /* --- NEON İMLEÇ TASARIMI (DÜZELTİLDİ) --- */
         .custom-cursor {
-           .custom-cursor {
-    background-image: url('limon.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    border: none; /* Eski halkayı sildik */
-    box-shadow: none; /* Eski parlamayı sildik */
-    width: 32px; /* Resmin boyutuna göre ayarla */
-    height: 32px;
-};
+            width: 32px;
+            height: 32px;
+            background-image: url('limon.png'); /* DOSYA ADI DOĞRU OLMALI */
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: fixed; /* BU ŞART */
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%); /* Tam merkezleme */
+            transition: transform 0.1s ease-out;
         }
+
+        /* Linklerin üzerine gelince büyüme efekti */
         .cursor-hover { 
-            transform: translate(-50%, -50%) scale(2.5); 
-            background: rgba(178, 8, 209, 0.2); 
+            transform: translate(-50%, -50%) scale(1.5); 
         }
 
         /* --- NAVİGASYON --- */
@@ -128,42 +130,13 @@
 
         /* --- MOBİL UYUMLULUK --- */
         @media (max-width: 850px) {
-            * { cursor: auto !important; } /* Mobilde gerçek imleci geri getir */
+            * { cursor: auto !important; }
             .custom-cursor { display: none; }
-            nav {
-                flex-direction: column;
-                height: auto;
-                padding: 15px;
-            }
-            nav ul {
-                flex-direction: column;
-                width: 100%;
-                margin-top: 15px;
-                gap: 5px;
-            }
-            nav ul li {
-                margin-left: 0;
-                width: 100%;
-                text-align: center;
-            }
-            .nav-btn {
-                display: block;
-                width: 100%;
-                padding: 12px;
-                font-size: 1.1rem;
-            }
+            nav { flex-direction: column; height: auto; padding: 15px; }
+            nav ul { flex-direction: column; width: 100%; margin-top: 15px; gap: 5px; }
+            nav ul li { margin-left: 0; width: 100%; text-align: center; }
+            .nav-btn { display: block; width: 100%; padding: 12px; font-size: 1.1rem; }
             h1 { font-size: 2.5rem; }
-            p { font-size: 1.1rem; }
-            
-            .social-grid {
-                gap: 15px;
-                flex-wrap: wrap;
-            }
-            .social-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
         }
 
         @keyframes fadeIn {
@@ -217,14 +190,14 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Butonlara gelince imleci büyüt
+        // Butonlara gelince efekti tetikle
         const hoverElements = document.querySelectorAll('a, button, .social-btn');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // --- EASTER EGG SİSTEMİ (dudu) ---
+        // --- EASTER EGG SİSTEMİ (fukushu) ---
         let inputBuffer = "";
         const secretCode = "fukushu";
 
@@ -240,7 +213,6 @@
                 audio.currentTime = 0;
                 audio.play();
                 
-                // Ekranı anlık mor parlat
                 document.body.style.boxShadow = "inset 0 0 100px #b208d1";
                 setTimeout(() => {
                     document.body.style.boxShadow = "none";
