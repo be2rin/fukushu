@@ -155,6 +155,9 @@
     <audio id="easterEggAudio">
         <source src="Sopayı soktum ben tam kıçına.mp3" type="audio/mpeg">
     </audio>
+    
+    <audio id="easterEggAudio2">
+    <source src="dudu.mp3" type="audio/mpeg"> </audio>
 
     <nav>
         <div class="logo">BE2RİN</div>
@@ -202,7 +205,10 @@
 
         // Easter Egg
         let inputBuffer = "";
-        const secretCode = "fukushu";
+        const easterEggs = {
+    "fukushu": "easterEggAudio",
+    "dudu": "easterEggAudio2" // Klavyeden dudu yazınca bu çalacak
+};
 
         document.addEventListener('keydown', (e) => {
             inputBuffer += e.key.toLowerCase();
