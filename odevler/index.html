@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* --- NAVİGASYON (TÜM SAYFALARLA EŞİTLENDİ) --- */
+        /* --- NAVİGASYON --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -90,12 +90,47 @@
 
         #iframe-container { border: 2px solid var(--primary-color); border-radius: 10px; overflow: hidden; background: black; margin-top: 20px; }
         
+        /* --- MOBİL UYUMLULUK (BURAYI EKLEDİM) --- */
+        @media (max-width: 850px) {
+            nav {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+            }
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+                gap: 5px;
+            }
+            nav ul li {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-btn {
+                display: block;
+                width: 100%;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            h1 { font-size: 2.2rem; }
+            .ders-btn {
+                padding: 15px;
+                font-size: 1.1rem;
+                gap: 15px;
+            }
+            iframe {
+                height: 400px !important; /* Mobilde video alanı dengelendi */
+            }
+        }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-     <nav>
+    <nav>
         <div class="logo">BE2RİN</div>
         <ul>
             <li><a href="/fukushu/anasayfa" class="nav-btn">ANA SAYFA</a></li>
@@ -126,14 +161,14 @@
             <div id="ders-sistem" style="display: none;">
                 <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
                 <h1>Teknoloji Temelli Coğrafya</h1>
-                <button class="ders-btn" onclick="alert('video1')"><i class="fas fa-play-circle"></i> Video 1</button>
-                <button class="ders-btn" onclick="alert('SÜLEYMAN TÜRKER İNFAZ VİDEOSU.')">Sunum</button>
+                <button class="ders-btn" onclick="alert('Video Henüz Eklenmedi.')"><i class="fas fa-play-circle"></i> Video 1</button>
+                <button class="ders-btn" onclick="alert('Sunum Henüz Hazır Değil.')">Sunum</button>
             </div>
 
             <div id="ders-olcme" style="display: none;">
                 <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
                 <h1>Türk Eğitim Sistemi ve Okul Yönetimi</h1>
-                <button class="ders-btn" onclick="alert('MUHAMMET ÖZDAĞHANLI İNFAZ VİDEOSU.')">Sunum</button>
+                <button class="ders-btn" onclick="alert('Sunum Yakında Yüklenecek.')">Sunum</button>
             </div>
 
             <div id="video-oynatici-alani" style="display: none;">
