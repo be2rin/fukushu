@@ -28,33 +28,26 @@
             position: relative;
         }
 
+        /* --- MENÜ TASARIMI --- */
         nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px; /* Bu değer her sayfada aynı olmalı! */
-    background: rgba(0, 0, 0, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    height: 80px; /* Yüksekliği sabitleyelim ki sayfa zıplamasın */
-}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-.logo {
-    font-size: 2rem; /* Logo boyutu sabit */
-    font-weight: bold;
-    color: var(--primary-color);
-    text-transform: uppercase;
-}
-
-main {
-    flex: 1;
-    padding: 60px 20px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
         nav ul { display: flex; list-style: none; flex-wrap: wrap; }
         nav ul li { margin-left: 20px; }
@@ -330,11 +323,40 @@ main {
         }
 
         /* MOBİL DÜZENLEMELERİ */
-        @media (max-width: 950px) {
-            nav { flex-direction: column; padding: 15px; }
-            nav ul { justify-content: center; gap: 10px; margin-top: 15px; }
-            nav ul li { margin: 0; }
-            nav ul li button { font-size: 1rem; padding: 8px; }
+      @media (max-width: 950px) {
+            nav {
+                flex-direction: column;
+                padding: 15px;
+                height: auto;
+            }
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+                gap: 5px;
+            }
+            nav ul li {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            nav ul li button, nav ul li a {
+                display: block;
+                width: 100%;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            .site-header-banner { height: 200px; }
+            h1 { font-size: 2.2rem; }
+            p { font-size: 1.1rem; }
+            .radio-card-horizontal, .yt-card { 
+                width: 100% !important; 
+                height: auto !important; 
+                flex-direction: column; 
+                padding: 20px; 
+            }
+            .media-row { gap: 20px; }
+        }
 
             /* Banner Mobil Ayarı */
             .site-header-banner { height: 200px; }
@@ -661,4 +683,12 @@ main {
         }
     </script>
 </body>
+
+</html>
+
+
+
+
+
+
 </html>
