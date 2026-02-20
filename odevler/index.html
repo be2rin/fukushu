@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BE2RİN | Ödevler</title>
-    <link rel="icon" type="image/png" href="kan.png">
+    <link rel="icon" type="image/png" href="../kan.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- ANA SAYFA (INDEX) İLE BİREBİR EŞİTLENMİŞ TASARIM --- */
         :root {
             --primary-color: #b208d1;
             --bg-color: #0f0c29;
@@ -25,18 +24,18 @@
             flex-direction: column;
         }
 
-        /* --- NAVİGASYON: INDEX İLE MİLİMETRİK AYNI --- */
+        /* --- NAVİGASYON (TÜM SAYFALARLA EŞİTLENDİ) --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 50px; /* INDEX İLE AYNI */
+            padding: 20px 50px;
             background: rgba(0, 0, 0, 0.8);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            height: 80px; /* INDEX İLE AYNI */
+            height: 80px;
         }
 
         .logo {
@@ -45,24 +44,18 @@
             color: var(--primary-color);
             text-transform: uppercase;
             letter-spacing: 2px;
-            /* Logo kaymasını önlemek için index ile aynı tutuldu */
         }
 
         nav ul { display: flex; list-style: none; flex-wrap: wrap; }
         nav ul li { margin-left: 20px; }
 
-        /* BUTON VE LİNK STİLLERİ (BOŞLUKLAR INDEX İLE EŞİTLENDİ) */
         .nav-btn {
-            background: none;
-            border: none;
+            text-decoration: none !important;
             color: white !important;
             font-size: 1.2rem;
-            cursor: pointer;
             font-weight: 500;
-            padding: 10px; /* BURASI 15px'Dİ, INDEX'TEKİ GİBİ 10px YAPILDI - KAYMAYI BU ÇÖZER */
+            padding: 10px;
             transition: color 0.3s, text-shadow 0.3s;
-            font-family: inherit;
-            text-decoration: none !important;
             display: inline-block;
         }
 
@@ -71,7 +64,7 @@
             text-shadow: 0 0 10px var(--primary-color);
         }
 
-        /* --- İÇERİK TASARIMI --- */
+        /* --- İÇERİK --- */
         main {
             flex: 1;
             padding: 60px 20px;
@@ -102,18 +95,15 @@
 </head>
 <body>
 
-   <nav>
-    <div class="logo">BE2RİN</div>
-    <ul>
-        <li><a href="/fukushu/anasayfa" class="nav-btn">ANA SAYFA</a></li>
-        
-        <li><a href="/fukushu/odevler" class="nav-btn">ÖDEVLERİM</a></li>
-        
-        <li><a href="/fukushu/fukushu" class="nav-btn">FUKUSHU</a></li>
-        
-        <li><a href="/fukushu/baglantilar" class="nav-btn">BAĞLANTILAR</a></li>
-    </ul>
-</nav>
+    <nav>
+        <div class="logo">BE2RİN</div>
+        <ul>
+            <li><a href="/fukushu/" class="nav-btn">ANA SAYFA</a></li>
+            <li><a href="/fukushu/odevler" class="nav-btn">ÖDEVLERİM</a></li>
+            <li><a href="/fukushu/fukushu" class="nav-btn">FUKUSHU</a></li>
+            <li><a href="/fukushu/baglantilar" class="nav-btn">BAĞLANTILAR</a></li>
+        </ul>
+    </nav>
 
     <main>
         <div class="page-content">
