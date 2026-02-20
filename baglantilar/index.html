@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* --- NAVİGASYON (INDEX İLE MİLİMETRİK AYNI) --- */
+        /* --- NAVİGASYON --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -105,6 +105,44 @@
             transform: scale(1.1);
             box-shadow: 0 0 30px var(--primary-color);
             border-color: var(--primary-color);
+        }
+
+        /* --- MOBİL UYUMLULUK (BURAYI EKLEDİM) --- */
+        @media (max-width: 850px) {
+            nav {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+            }
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+                gap: 5px;
+            }
+            nav ul li {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-btn {
+                display: block;
+                width: 100%;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            h1 { font-size: 2.5rem; }
+            p { font-size: 1.1rem; }
+            
+            .social-grid {
+                gap: 15px;
+                flex-wrap: wrap; /* Butonlar sığmazsa alt satıra geçer */
+            }
+            .social-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
         }
 
         @keyframes fadeIn {
