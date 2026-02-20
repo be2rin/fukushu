@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BE2RİN | Fukushu</title>
+    <link rel="icon" type="image/png" href="../kan.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #b208d1;
+            --bg-color: #0f0c29;
+            --text-color: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVİGASYON (INDEX İLE MİLİMETRİK AYNI) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 20px; }
+
+        .nav-btn {
+            text-decoration: none !important;
+            color: white !important;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, text-shadow 0.3s;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            color: var(--primary-color) !important;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        /* --- İÇERİK --- */
+        main {
+            flex: 1;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 { font-size: 4rem; color: var(--primary-color); margin-bottom: 20px; }
+        p.subtitle { font-size: 1.5rem; color: #ccc; margin-bottom: 40px; }
+
+        .quote-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-left: 6px solid var(--primary-color);
+            margin-bottom: 40px;
+            border-radius: 0 15px 15px 0;
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .quote-title {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quote-text {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">BE2RİN</div>
+        <ul>
+            <li><a href="/fukushu/" class="nav-btn">ANA SAYFA</a></li>
+            <li><a href="/fukushu/odevler" class="nav-btn">ÖDEVLERİM</a></li>
+            <li><a href="/fukushu/fukushu" class="nav-btn">FUKUSHU</a></li>
+            <li><a href="/fukushu/baglantilar" class="nav-btn">BAĞLANTILAR</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>FUKUSHU</h1>
+        <p class="subtitle">Aşk ve İntikam...</p>
+
+        <div class="quote-box">
+            <span class="quote-title">HAİNE</span>
+            <p class="quote-text">
+                "La haine a commencé à croître dès la naissance de l'humanité. C'est pourquoi notre monde, chaque jour plus empoisonné par le chaos, devient de plus en plus invivable. Si la haine mûre ne présente pas de danger, les individus animés par une haine encore jeune sont des criminels en puissance. Désirer la haine, c'est une manifestation évidente de sadisme."
+            </p>
+        </div>
+
+        <div class="quote-box">
+            <span class="quote-title">DÉGOÛT</span>
+            <p class="quote-text">
+                "L'être humain doit trouver sa place dans la société où il vit. Ceux qui échouent à s'y conformer risquent de devenir l'incarnation même de la haine. Avec le temps, le dégoût et une succession de contrariétés éloignent l'individu de lui-même et du monde qui l'entoure. Pour celui qui est aliéné, ni le chant des oiseaux ni le rire des enfants ne sauraient offrir un remède."
+            </p>
+        </div>
+
+        <div class="quote-box">
+            <span class="quote-title">CRİTİQUE</span>
+            <p class="quote-text">
+                "La base de la pensée critique est l'autocritique. Les personnes incapables de se regarder dans le miroir, même si elles formulent des critiques cohérentes et justifiées, ne font que jeter de la boue sur leur entourage. Si vous êtes un menteur... Acceptez-le d'abord, exprimez-le, puis critiquez les autres. Si vous voulez vivre avec une conscience de soi digne d'un enfant du primaire, choisissez les personnes avec lesquelles vous communiquez en fonction de votre classe sociale."
+            </p>
+        </div>
+    </main>
+
+</body>
+</html>
