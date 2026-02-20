@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BE2RİN | Bağlantılar</title>
+    <link rel="icon" type="image/png" href="../kan.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #b208d1;
+            --bg-color: #0f0c29;
+            --text-color: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVİGASYON (INDEX İLE MİLİMETRİK AYNI) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 20px; }
+
+        .nav-btn {
+            text-decoration: none !important;
+            color: white !important;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, text-shadow 0.3s;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            color: var(--primary-color) !important;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        /* --- İÇERİK --- */
+        main {
+            flex: 1;
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        h1 { font-size: 3.5rem; color: var(--primary-color); margin-bottom: 20px; }
+        p { font-size: 1.3rem; color: #ccc; margin-bottom: 50px; }
+
+        /* --- SOSYAL MEDYA --- */
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .social-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .social-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">BE2RİN</div>
+        <ul>
+            <li><a href="/fukushu/" class="nav-btn">ANA SAYFA</a></li>
+            <li><a href="/fukushu/odevler" class="nav-btn">ÖDEVLERİM</a></li>
+            <li><a href="/fukushu/fukushu" class="nav-btn">FUKUSHU</a></li>
+            <li><a href="/fukushu/baglantilar" class="nav-btn">BAĞLANTILAR</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Semih Bayoğlu</h1>
+        <p>Sosyal medya hesaplarıma buradan ulaşabilirsiniz.</p>
+
+        <div class="social-grid">
+            <a href="https://www.instagram.com/semihbygl" target="_blank" class="social-btn">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://x.com/fukushurin" target="_blank" class="social-btn">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.youtube.com/@be2rin" target="_blank" class="social-btn">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </main>
+
+</body>
+</html>
