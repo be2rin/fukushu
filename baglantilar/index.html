@@ -24,25 +24,28 @@
             display: flex;
             flex-direction: column;
             transition: box-shadow 0.3s ease;
+            overflow-x: hidden; /* Taşmayı engelle */
         }
 
-        /* --- NEON İMLEÇ TASARIMI (DÜZELTİLDİ) --- */
+        /* --- ÖZEL İMLEÇ TASARIMI (KESİN ÇÖZÜM) --- */
         .custom-cursor {
-            width: 32px;
-            height: 32px;
-            background-image: url('limon.png'); /* DOSYA ADI DOĞRU OLMALI */
+            width: 40px; /* Biraz büyüttüm ki limon net gözüksün */
+            height: 40px;
+            background-image: url('limon.png'); /* DOSYA ADINI TEKRAR KONTROL ET */
             background-size: contain;
             background-repeat: no-repeat;
-            position: fixed; /* BU ŞART */
+            position: fixed;
+            top: 0;
+            left: 0;
             pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%); /* Tam merkezleme */
+            z-index: 100000 !important; /* HER ŞEYİN ÜSTÜNDE */
+            transform: translate(-50%, -50%);
             transition: transform 0.1s ease-out;
+            display: block;
         }
 
-        /* Linklerin üzerine gelince büyüme efekti */
         .cursor-hover { 
-            transform: translate(-50%, -50%) scale(1.5); 
+            transform: translate(-50%, -50%) scale(1.8); 
         }
 
         /* --- NAVİGASYON --- */
@@ -76,7 +79,7 @@
             font-size: 1.2rem;
             font-weight: 500;
             padding: 10px;
-            transition: color 0.3s, text-shadow 0.3s;
+            transition: 0.3s;
             display: inline-block;
         }
 
@@ -131,7 +134,7 @@
         /* --- MOBİL UYUMLULUK --- */
         @media (max-width: 850px) {
             * { cursor: auto !important; }
-            .custom-cursor { display: none; }
+            .custom-cursor { display: none !important; }
             nav { flex-direction: column; height: auto; padding: 15px; }
             nav ul { flex-direction: column; width: 100%; margin-top: 15px; gap: 5px; }
             nav ul li { margin-left: 0; width: 100%; text-align: center; }
@@ -182,42 +185,36 @@
     </main>
 
     <script>
-        // --- İMLEÇ HAREKET KODLARI ---
         const cursor = document.querySelector('.custom-cursor');
         
+        // Farenin konumunu milisaniyelik gecikme olmadan takip etmesi için
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Butonlara gelince efekti tetikle
-        const hoverElements = document.querySelectorAll('a, button, .social-btn');
-        hoverElements.forEach(el => {
+        // Hover Efektleri
+        const hoverItems = document.querySelectorAll('a, button, .social-btn');
+        hoverItems.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // --- EASTER EGG SİSTEMİ (fukushu) ---
+        // Easter Egg
         let inputBuffer = "";
         const secretCode = "fukushu";
 
         document.addEventListener('keydown', (e) => {
             inputBuffer += e.key.toLowerCase();
-            
             if (inputBuffer.length > secretCode.length) {
                 inputBuffer = inputBuffer.substring(inputBuffer.length - secretCode.length);
             }
-
             if (inputBuffer === secretCode) {
                 const audio = document.getElementById('easterEggAudio');
                 audio.currentTime = 0;
                 audio.play();
-                
                 document.body.style.boxShadow = "inset 0 0 100px #b208d1";
-                setTimeout(() => {
-                    document.body.style.boxShadow = "none";
-                }, 500);
-                
+                setTimeout(() => { document.body.style.boxShadow = "none"; }, 500);
                 inputBuffer = "";
             }
         });
