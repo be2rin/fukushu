@@ -11,18 +11,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        /* --- NAVİGASYON --- */
+        /* --- NAVİGASYON (DİĞER SAYFALARLA %100 AYNI YAPILDI) --- */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: rgba(0, 0, 0, 0.8); border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; z-index: 1000; height: 80px; }
         .logo { font-size: 2rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; }
         nav ul { display: flex; list-style: none; }
         nav ul li { margin-left: 20px; }
-        .nav-btn { color: white !important; font-size: 1.1rem; font-weight: 500; padding: 10px; transition: 0.3s; text-decoration: none !important; }
+        /* Font boyutu 1.2rem yapıldı, bağlantılarla eşitlendi */
+        .nav-btn { color: white !important; font-size: 1.2rem; font-weight: 500; padding: 10px; transition: 0.3s; text-decoration: none !important; }
         .nav-btn:hover { color: var(--primary-color) !important; text-shadow: 0 0 10px var(--primary-color); }
 
         /* --- GALERİ GRID --- */
         main { flex: 1; padding: 40px 20px; width: 100%; max-width: 1400px; margin: 0 auto; text-align: center; }
-        
-        /* PARLAMA SİLİNDİ, MOR RENK SABİTLENDİ */
         h1 { font-size: 3rem; color: var(--primary-color); margin-bottom: 30px; text-shadow: none; }
 
         .gallery-grid {
@@ -49,38 +48,46 @@
             z-index: 2;
         }
 
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.3s; }
-        .gallery-item:hover img { opacity: 1; }
+        .gallery-item img, .gallery-item video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            opacity: 0.6; 
+            transition: 0.3s; 
+        }
+        .gallery-item:hover img, .gallery-item:hover video { opacity: 1; }
 
-        /* --- LIGHTBOX (TAM EKRAN) --- */
+        /* --- LIGHTBOX --- */
         #lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center;
             z-index: 2000; padding: 20px;
         }
 
-        #lightbox-content {
+        #lightbox-content-container {
             max-width: 90%; max-height: 85%;
             border: 4px solid var(--primary-color);
             box-shadow: 0 0 50px var(--primary-color);
             border-radius: 10px;
+            background: black;
+            display: flex; align-items: center; justify-content: center;
         }
 
+        .lb-media { max-width: 100%; max-height: 100%; display: block; }
+
         .close-lb, .prev-lb, .next-lb {
-            position: absolute; color: white; font-size: 2.5rem; cursor: pointer; transition: 0.3s;
+            position: absolute; color: white; font-size: 2.5rem; cursor: pointer; transition: 0.3s; z-index: 2100;
         }
         .close-lb { top: 20px; right: 30px; }
         .prev-lb { left: 30px; top: 50%; transform: translateY(-50%); }
         .next-lb { right: 30px; top: 50%; transform: translateY(-50%); }
         .close-lb:hover, .prev-lb:hover, .next-lb:hover { color: var(--primary-color); }
 
-        /* --- MOBİL AYAR --- */
         @media (max-width: 1024px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { 
             nav { padding: 15px; flex-direction: column; height: auto; }
             nav ul { margin-top: 15px; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); } 
-            h1 { font-size: 2rem; }
             .prev-lb, .next-lb { bottom: 30px; top: auto; transform: none; }
             .prev-lb { left: 40%; } .next-lb { right: 40%; }
         }
@@ -104,12 +111,11 @@
         <div class="gallery-grid">
             <div class="gallery-item"><img src="deneme.jpg" onclick="openLightbox(0)"></div>
             <div class="gallery-item"><img src="lmao.jpg" onclick="openLightbox(1)"></div>
-           <div class="gallery-item">
-    <video muted loop onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;" onclick="openLightbox(2)">
-        <source src="Nokia Dudu Zil Sesi.mp4" type="video/mp4">
-    </video>
-    <div class="img-caption"></div>
-</div>
+            <div class="gallery-item">
+                <video muted loop onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;" onclick="openLightbox(2)">
+                    <source src="Nokia Dudu Zil Sesi.mp4" type="video/mp4">
+                </video>
+            </div>
             <div class="gallery-item"><img src="../resim4.jpg" onclick="openLightbox(3)"></div>
             <div class="gallery-item"><img src="../resim5.jpg" onclick="openLightbox(4)"></div>
             <div class="gallery-item"><img src="../resim6.jpg" onclick="openLightbox(5)"></div>
@@ -128,36 +134,51 @@
     <div id="lightbox">
         <span class="close-lb" onclick="closeLightbox()">&times;</span>
         <span class="prev-lb" onclick="changeImg(-1)">&#10094;</span>
-        <img id="lightbox-content" src="">
+        <div id="lightbox-content-container"></div>
         <span class="next-lb" onclick="changeImg(1)">&#10095;</span>
     </div>
 
     <script>
         let currentImgIndex = 0;
-        const images = document.querySelectorAll('.gallery-item img');
+        // Kritik düzeltme: Hem img hem video elementlerini doğru sırada seçiyoruz
+        const mediaElements = document.querySelectorAll('.gallery-item img, .gallery-item video');
         const lb = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lightbox-content');
+        const lbContainer = document.getElementById('lightbox-content-container');
 
         function openLightbox(index) {
             currentImgIndex = index;
             lb.style.display = 'flex';
-            lbImg.src = images[currentImgIndex].src;
+            updateLightboxContent();
             document.body.style.overflow = 'hidden';
+        }
+
+        function updateLightboxContent() {
+            const target = mediaElements[currentImgIndex];
+            lbContainer.innerHTML = ''; 
+
+            if (target.tagName === 'VIDEO') {
+                // Video ise video player bas
+                const videoSrc = target.querySelector('source').getAttribute('src');
+                lbContainer.innerHTML = `<video class="lb-media" src="${videoSrc}" controls autoplay></video>`;
+            } else {
+                // Resim ise img bas
+                lbContainer.innerHTML = `<img class="lb-media" src="${target.getAttribute('src')}">`;
+            }
         }
 
         function closeLightbox() {
             lb.style.display = 'none';
+            lbContainer.innerHTML = ''; 
             document.body.style.overflow = 'auto';
         }
 
         function changeImg(n) {
             currentImgIndex += n;
-            if (currentImgIndex >= images.length) currentImgIndex = 0;
-            if (currentImgIndex < 0) currentImgIndex = images.length - 1;
-            lbImg.src = images[currentImgIndex].src;
+            if (currentImgIndex >= mediaElements.length) currentImgIndex = 0;
+            if (currentImgIndex < 0) currentImgIndex = mediaElements.length - 1;
+            updateLightboxContent();
         }
 
-        // Klavye desteği
         document.addEventListener('keydown', (e) => {
             if (lb.style.display === 'flex') {
                 if (e.key === 'ArrowRight') changeImg(1);
