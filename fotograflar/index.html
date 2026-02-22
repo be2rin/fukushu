@@ -8,8 +8,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary-color: #b208d1; --bg-color: #0f0c29; --text-color: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* --- CURSOR İÇİN STANDART İMLECİ GİZLE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(to right, #0f0c29, #302b63, #24243e); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        /* --- HAVALI NEON İMLEÇ TASARIMI --- */
+        .custom-cursor {
+            width: 10px; height: 10px; background-color: var(--primary-color); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 99999;
+            box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+            transform: translate(-50%, -50%); transition: transform 0.05s linear;
+        }
+        .cursor-aura {
+            width: 35px; height: 35px; border: 1px solid var(--primary-color); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 99998;
+            box-shadow: 0 0 10px var(--primary-color);
+            transform: translate(-50%, -50%); transition: transform 0.15s ease-out;
+        }
+        /* Hover durumunda büyüme efekti */
+        .cursor-active .custom-cursor { transform: translate(-50%, -50%) scale(2); background: white; }
+        .cursor-active .cursor-aura { transform: translate(-50%, -50%) scale(1.5); border-color: white; opacity: 0.5; }
 
         /* --- NAVİGASYON (BAĞLANTILARLA %100 AYNI) --- */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: rgba(0, 0, 0, 0.8); border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; z-index: 1000; height: 80px; }
@@ -86,8 +106,10 @@
         .next-lb { right: 30px; top: 50%; transform: translateY(-50%); }
         .close-lb:hover, .prev-lb:hover, .next-lb:hover { color: var(--primary-color); }
 
-        /* --- MOBİL UYUMLULUK (EKLEME YAPILDI) --- */
+        /* --- MOBİL UYUMLULUK --- */
         @media (max-width: 850px) {
+            * { cursor: auto !important; }
+            .custom-cursor, .cursor-aura { display: none !important; }
             nav {
                 flex-direction: column;
                 height: auto;
@@ -111,7 +133,7 @@
                 font-size: 1.1rem;
             }
             .gallery-grid {
-                grid-template-columns: repeat(2, 1fr); /* Kareler mobilde 2'li yan yana */
+                grid-template-columns: repeat(2, 1fr); 
                 gap: 10px;
             }
             h1 { font-size: 2.2rem; }
@@ -121,6 +143,9 @@
     </style>
 </head>
 <body>
+
+    <div class="custom-cursor"></div>
+    <div class="cursor-aura"></div>
 
     <nav>
         <div class="logo">BE2RİN</div>
@@ -143,12 +168,12 @@
                     <source src="Nokia Dudu Zil Sesi.mp4" type="video/mp4">
                 </video>
             </div>
-<div class="gallery-item">
+            <div class="gallery-item">
                 <video muted loop onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;" onclick="openLightbox(3)">
                     <source src="sülo.mp4" type="video/mp4">
                 </video>
             </div>            
-<div class="gallery-item">
+            <div class="gallery-item">
                 <video muted loop onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0;" onclick="openLightbox(4)">
                     <source src="31234.mp4" type="video/mp4">
                 </video>
@@ -174,6 +199,24 @@
     </div>
 
     <script>
+        // --- CURSOR SCRİPTİ ---
+        const cursor = document.querySelector('.custom-cursor');
+        const aura = document.querySelector('.cursor-aura');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            aura.style.left = e.clientX + 'px';
+            aura.style.top = e.clientY + 'px';
+        });
+
+        // Etkileşimli elemanlarda büyüme efekti (Senin galeri itemlerin dahil)
+        document.querySelectorAll('a, button, .gallery-item, .nav-btn, .close-lb, .prev-lb, .next-lb').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+        });
+
+        // --- SENİN GALERİ SCRİPTİN ---
         let currentImgIndex = 0;
         const mediaElements = document.querySelectorAll('.gallery-item img, .gallery-item video');
         const lb = document.getElementById('lightbox');
