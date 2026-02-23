@@ -13,7 +13,8 @@
             --text-color: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* --- CURSOR İÇİN STANDART İMLECİ GİZLE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,6 +24,23 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* --- HAVALI NEON İMLEÇ TASARIMI --- */
+        .custom-cursor {
+            width: 10px; height: 10px; background-color: var(--primary-color); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 99999;
+            box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+            transform: translate(-50%, -50%); transition: transform 0.05s linear;
+        }
+        .cursor-aura {
+            width: 35px; height: 35px; border: 1px solid var(--primary-color); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 99998;
+            box-shadow: 0 0 10px var(--primary-color);
+            transform: translate(-50%, -50%); transition: transform 0.15s ease-out;
+        }
+        /* Hover durumunda büyüme efekti */
+        .cursor-active .custom-cursor { transform: translate(-50%, -50%) scale(2); background: white; }
+        .cursor-active .cursor-aura { transform: translate(-50%, -50%) scale(1.5); border-color: white; opacity: 0.5; }
 
         /* --- NAVİGASYON --- */
         nav {
@@ -84,6 +102,7 @@
             border-radius: 0 15px 15px 0;
             text-align: left;
             animation: fadeIn 0.5s ease-in-out;
+            cursor: none; /* Kutu içinde de imleç bizimki kalsın */
         }
 
         .quote-title {
@@ -103,8 +122,10 @@
             line-height: 1.8;
         }
 
-        /* --- MOBİL UYUMLULUK (EKLEDİM) --- */
+        /* --- MOBİL UYUMLULUK --- */
         @media (max-width: 850px) {
+            * { cursor: auto !important; }
+            .custom-cursor, .cursor-aura { display: none !important; }
             nav {
                 flex-direction: column;
                 height: auto;
@@ -142,7 +163,10 @@
 </head>
 <body>
 
-      <nav>
+    <div class="custom-cursor"></div>
+    <div class="cursor-aura"></div>
+
+    <nav>
         <div class="logo">BE2RİN</div>
         <ul>
             <li><a href="/fukushu/anasayfa" class="nav-btn">ANA SAYFA</a></li>
@@ -160,7 +184,7 @@
         <div class="quote-box">
             <span class="quote-title">HAİNE</span>
             <p class="quote-text">
-                "La haine a commencé à croître dès la naissance de l'humanité. C'est pourquoi notre monde, chaque jour plus empoisonné par le chaos, devient de plus en plus invivable. Si la haine mûre ne présente pas de danger, les individus animés par une haine encore jeune sont des criminels en puissance. Désirer la haine, c'est une manifestation évidente de sadisme."
+                "La haine a commencé à croître dès la naissance de l'humanité. C'est pourquoi notre monde, chaque jour plus empoisonné par le chaos, devient de plus en plus invivable. Si la haine mûre ne presents pas de danger, les individus animés par une haine encore jeune sont des criminels en puissance. Désirer la haine, c'est une manifestation évidente de sadisme."
             </p>
         </div>
 
@@ -174,11 +198,28 @@
         <div class="quote-box">
             <span class="quote-title">CRİTİQUE</span>
             <p class="quote-text">
-                "La base de la pensée critique est l'autocritique. Les personnes incapables de se regarder dans le miroir, même si elles formulent des critiques cohérentes et justifiées, ne font que jeter de la boue sur leur entourage. Si vous êtes un menteur... Acceptez-le d'abord, exprimez-le, puis critiquez les autres. Si vous voulez vivre avec une conscience de soi digne d'un enfant du primaire, choisissez les personnes avec lesquelles vous communiquez en fonction de votre classe sociale."
+                "La base de la pensée critique est l'autocritique. Les personnes incapables de se regarder dans le miroir, même si elles formulent des critiques cohérentes et justifiées, ne font que jeter de la boue sur leur entourage. Si vous êtes un menteur... Acceptez-le d'abord, exprimez-le, puis critiquez les autres. Si vous voulez vivre with une conscience de soi digne d'un enfant du primaire, choisissez les personnes with lesquelles vous communiquez en fonction de votre classe sociale."
             </p>
         </div>
     </main>
 
+    <script>
+        // --- CURSOR SCRİPTİ ---
+        const cursor = document.querySelector('.custom-cursor');
+        const aura = document.querySelector('.cursor-aura');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            aura.style.left = e.clientX + 'px';
+            aura.style.top = e.clientY + 'px';
+        });
+
+        // Alıntı kutularına ve butonlara gelince büyüme efekti
+        document.querySelectorAll('a, button, .nav-btn, .quote-box').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+        });
+    </script>
 </body>
-</html>
 </html>
