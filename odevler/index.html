@@ -11,15 +11,10 @@
             --primary-color: #b208d1;
             --bg-color: #0f0c29;
             --text-color: #ffffff;
-            --sidebar-bg: rgba(0, 0, 0, 0.6);
-            /* PUNTO AYARLARI - GÖZDEN KAÇMAYACAK KADAR BÜYÜK */
-            --font-h1: 4rem;      /* ~64px */
-            --font-h2: 3rem;      /* ~48px */
-            --font-h3: 2.2rem;    /* ~35px */
-            --font-body: 1.5rem;  /* ~24px */
+            --sidebar-bg: rgba(0, 0, 0, 0.4);
         }
 
-        /* --- CURSOR SCRİPTİ İÇİN STANDART İMLECİ GİZLE --- */
+        /* --- CURSOR --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
 
         body {
@@ -29,10 +24,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            font-size: var(--font-body);
         }
 
-        /* --- HAVALI NEON İMLEÇ --- */
         .custom-cursor {
             width: 10px; height: 10px; background-color: var(--primary-color); border-radius: 50%;
             position: fixed; pointer-events: none; z-index: 99999;
@@ -45,99 +38,100 @@
             box-shadow: 0 0 10px var(--primary-color);
             transform: translate(-50%, -50%); transition: transform 0.15s ease-out;
         }
-        .cursor-active .custom-cursor { transform: translate(-50%, -50%) scale(2.5); background: white; }
-        .cursor-active .cursor-aura { transform: translate(-50%, -50%) scale(2); border-color: white; opacity: 0.5; }
+        .cursor-active .custom-cursor { transform: translate(-50%, -50%) scale(2); background: white; }
+        .cursor-active .cursor-aura { transform: translate(-50%, -50%) scale(1.5); border-color: white; opacity: 0.5; }
 
-        /* --- NAVİGASYON --- */
+        /* --- NAVİGASYON (Orijinal Tasarım) --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 50px; background: rgba(0, 0, 0, 0.8);
-            border-bottom: 3px solid var(--primary-color);
-            position: sticky; top: 0; z-index: 1000; height: 100px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky; top: 0; z-index: 1000; height: 80px;
         }
-
-        .logo { font-size: 2.5rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 3px; }
-        nav ul { display: flex; list-style: none; }
-        nav ul li { margin-left: 25px; }
+        .logo { font-size: 2rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; }
+        nav ul { display: flex; list-style: none; flex-wrap: wrap; }
+        nav ul li { margin-left: 20px; }
         .nav-btn {
-            text-decoration: none !important; color: white !important; font-size: 1.3rem;
-            font-weight: 600; padding: 10px; transition: 0.3s;
+            text-decoration: none !important; color: white !important; font-size: 1.2rem;
+            font-weight: 500; padding: 10px; transition: color 0.3s, text-shadow 0.3s; display: inline-block;
         }
-        .nav-btn:hover { color: var(--primary-color) !important; text-shadow: 0 0 15px var(--primary-color); }
+        .nav-btn:hover { color: var(--primary-color) !important; text-shadow: 0 0 10px var(--primary-color); }
 
-        /* --- İÇERİK --- */
-        main { flex: 1; padding: 60px 20px; width: 100%; max-width: 1400px; margin: 0 auto; }
+        /* --- ANA İÇERİK --- */
+        main { flex: 1; padding: 60px 20px; width: 100%; max-width: 1300px; margin: 0 auto; }
         .page-content { animation: fadeIn 0.4s ease-in-out; text-align: center; }
-        h1 { font-size: var(--font-h1); color: var(--primary-color); margin-bottom: 50px; text-shadow: 0 0 20px rgba(178, 8, 209, 0.4); }
+        h1 { font-size: 3.5rem; color: var(--primary-color); margin-bottom: 40px; }
         
         .ders-btn {
-            display: flex; align-items: center; gap: 25px; width: 100%; padding: 35px; margin: 25px 0;
-            background: rgba(255, 255, 255, 0.1); color: white; font-size: 1.8rem; border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px; cursor: pointer; transition: 0.3s; text-align: left;
+            display: flex; align-items: center; gap: 20px; width: 100%; padding: 25px; margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1); color: white; font-size: 1.4rem; border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px; cursor: pointer; transition: 0.2s; text-align: left;
         }
-        .ders-btn:hover { background: var(--primary-color); transform: translateX(15px); box-shadow: 0 0 35px var(--primary-color); color: #fff; }
+        .ders-btn:hover { background: var(--primary-color); transform: translateX(10px); color: #fff; }
 
         .back-btn {
-            background: #d63031; color: white; border: none; padding: 15px 35px; border-radius: 12px;
-            cursor: pointer; font-size: 1.5rem; margin-bottom: 35px; display: inline-flex; align-items: center; gap: 15px;
+            background: #d63031; color: white; border: none; padding: 12px 25px; border-radius: 8px;
+            cursor: pointer; font-size: 1.1rem; margin-bottom: 25px; display: inline-flex; align-items: center; gap: 10px;
         }
 
-        /* --- WEBQUEST TASARIMI --- */
+        /* --- WEBQUEST KUTUSU --- */
         .webquest-container {
-            display: flex; gap: 30px; text-align: left; margin-top: 30px;
-            min-height: 850px; background: rgba(0, 0, 0, 0.4); border-radius: 25px; overflow: hidden;
-            border: 2px solid var(--primary-color); box-shadow: 0 0 60px rgba(0,0,0,0.6);
+            display: flex; gap: 20px; text-align: left; margin-top: 20px;
+            min-height: 800px; background: rgba(0, 0, 0, 0.3); border-radius: 15px; overflow: hidden;
+            border: 1px solid var(--primary-color);
         }
 
         .webquest-sidebar {
-            width: 350px; background: var(--sidebar-bg); padding: 35px;
-            border-right: 2px solid var(--primary-color);
+            width: 280px; background: var(--sidebar-bg); padding: 20px;
+            border-right: 1px solid var(--primary-color);
         }
 
         .webquest-nav-btn {
-            width: 100%; padding: 25px; margin-bottom: 15px; background: rgba(255,255,255,0.05);
-            color: white; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px;
-            text-align: left; transition: 0.3s; font-size: 1.4rem; font-weight: bold;
+            width: 100%; padding: 15px; margin-bottom: 10px; background: transparent;
+            color: white; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+            text-align: left; transition: 0.3s; font-size: 1.1rem; font-weight: bold;
         }
 
         .webquest-nav-btn:hover, .webquest-nav-btn.active {
-            background: var(--primary-color); color: white; transform: scale(1.05); box-shadow: 0 0 25px var(--primary-color);
+            background: var(--primary-color); color: white; transform: scale(1.05);
         }
 
-        .webquest-content { flex: 1; padding: 60px; overflow-y: auto; background: rgba(0,0,0,0.3); }
-        .webquest-section { display: none; animation: fadeIn 0.4s ease-out; }
+        /* WEBQUEST İÇERİK PUNTO AYARI (1.5 KAT BÜYÜTÜLMÜŞ) */
+        .webquest-content { flex: 1; padding: 50px; overflow-y: auto; background: rgba(0,0,0,0.2); }
+        .webquest-section { display: none; animation: fadeIn 0.3s; }
         .webquest-section.active { display: block; }
         
-        h3 { font-size: var(--font-h2); color: var(--primary-color); margin-bottom: 40px; border-bottom: 3px solid var(--primary-color); display: inline-block; }
-        p { margin-bottom: 30px; line-height: 1.8; font-size: var(--font-body); }
+        .webquest-content p, .webquest-content li { font-size: 2.5rem; line-height: 1.6; margin-bottom: 35px; color: #fff; }
+        .webquest-content h3 { font-size: 3.8rem; color: var(--primary-color); margin-bottom: 40px; border-bottom: 3px solid var(--primary-color); display: inline-block; }
         
-        /* GÖREV VE SÜREÇ İÇİN KALIN VURGULAR VE BOŞLUKLAR */
-        .bold-header { color: var(--primary-color); font-weight: 800; font-size: 1.7rem; }
-        .wq-list-item { margin-bottom: 50px; list-style: none; }
+        /* Kalın Başlıklar */
+        .bold-header { font-weight: 900; color: var(--primary-color); }
 
-        /* TABLO AYARLARI */
-        .wq-table { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 1.3rem; }
+        /* Süreç Maddeleri Arası Boşluk */
+        .wq-step { margin-bottom: 60px; }
+
+        /* Değerlendirme Tablosu (Tam Metin) */
+        .wq-table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 1.8rem; }
         .wq-table th, .wq-table td { border: 1px solid rgba(255,255,255,0.2); padding: 25px; text-align: left; }
-        .wq-table th { background: var(--primary-color); color: white; font-size: 1.6rem; }
+        .wq-table th { background: var(--primary-color); color: white; }
 
-        /* --- ÇARK VE SES --- */
-        #wheel-container { display: flex; flex-direction: column; align-items: center; margin-top: 50px; }
-        #wheel-wrapper { position: relative; width: 450px; height: 450px; }
-        #wheelCanvas { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--primary-color); }
+        /* Çark */
+        #wheel-container { display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
+        #wheel-wrapper { position: relative; width: 400px; height: 400px; }
         #wheel-pointer {
             width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent;
-            border-top: 40px solid #fff; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;
-            filter: drop-shadow(0 0 15px var(--primary-color));
+            border-top: 40px solid var(--primary-color); position: absolute;
+            top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;
         }
+        #wheelCanvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 0 30px rgba(178, 8, 209, 0.3); }
 
-        /* MOBİL UYUMLULUK */
         @media (max-width: 1000px) {
             .webquest-container { flex-direction: column; }
-            .webquest-sidebar { width: 100%; border-right: none; border-bottom: 2px solid var(--primary-color); }
-            h1 { font-size: 2.5rem; }
+            .webquest-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--primary-color); }
+            .webquest-content p, .webquest-content li { font-size: 1.6rem; }
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -160,16 +154,10 @@
         <div class="page-content">
             <div id="dersler-listesi">
                 <h1>Ödevler ve Sunumlar</h1>
+                <p style="font-size: 1.3rem; color: #ccc;">İçeriğini görmek istediğiniz dersi seçiniz:</p>
                 <button class="ders-btn" onclick="dersAc('siyasi')"><i class="fas fa-globe"></i> Siyasi Coğrafya</button>
                 <button class="ders-btn" onclick="dersAc('sistem')"><i class="fas fa-microchip"></i> Teknoloji Temelli Coğrafya</button>
                 <button class="ders-btn" onclick="dersAc('olcme')"><i class="fas fa-book"></i> Türk Eğitim Sistemi ve Okul Yönetimi</button>
-            </div>
-
-            <div id="ders-siyasi" style="display: none;">
-                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
-                <h1>Siyasi Coğrafya</h1>
-                <button class="ders-btn" onclick="icerikAc('video1')"><i class="fas fa-play-circle"></i> Video 1</button>
-                <button class="ders-btn" onclick="icerikAc('video2')"><i class="fas fa-play-circle"></i> Video 2</button>
             </div>
 
             <div id="ders-sistem" style="display: none;">
@@ -177,6 +165,13 @@
                 <h1>Teknoloji Temelli Coğrafya</h1>
                 <button class="ders-btn" onclick="webQuestAc()"><i class="fas fa-user-secret"></i> WebQuest Örneği (Dijital Coğrafya Ajanları)</button>
                 <button class="ders-btn" onclick="alert('Sunum Henüz Hazır Değil.')"><i class="fas fa-file-powerpoint"></i> Sunum</button>
+            </div>
+
+            <div id="ders-siyasi" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
+                <h1>Siyasi Coğrafya</h1>
+                <button class="ders-btn" onclick="icerikAc('video1')"><i class="fas fa-play-circle"></i> Video 1</button>
+                <button class="ders-btn" onclick="icerikAc('video2')"><i class="fas fa-play-circle"></i> Video 2</button>
             </div>
 
             <div id="ders-olcme" style="display: none;">
@@ -187,7 +182,6 @@
 
             <div id="webquest-alani" style="display: none;">
                 <div style="text-align: left;"><button class="back-btn" onclick="dersAc('sistem')"><i class="fas fa-arrow-left"></i> Listeye Dön</button></div>
-                <h1 style="color: var(--primary-color);">🕵️ DİJİTAL COĞRAFYA AJANLARI</h1>
                 
                 <div class="webquest-container">
                     <div class="webquest-sidebar">
@@ -207,83 +201,71 @@
                             <div id="wheel-container">
                                 <div id="wheel-wrapper">
                                     <div id="wheel-pointer"></div>
-                                    <canvas id="wheelCanvas" width="500" height="500"></canvas>
+                                    <canvas id="wheelCanvas" width="400" height="400"></canvas>
                                 </div>
-                                <button id="spinBtn" class="ders-btn" style="width: auto; margin-top: 40px; padding: 25px 60px; justify-content: center; font-size: 2.2rem;">
+                                <button id="spinBtn" class="ders-btn" style="width: auto; margin-top: 40px; padding: 20px 40px; justify-content: center; font-size: 2rem;">
                                     <i class="fas fa-sync-alt"></i> KADER ÇARKINI ÇEVİR
                                 </button>
-                                <h2 id="wheelResult" style="margin-top: 30px; font-size: 3.5rem; color: #fff; text-shadow: 0 0 25px var(--primary-color);"></h2>
+                                <h2 id="wheelResult" style="margin-top: 30px; font-size: 3rem; color: #fff; text-shadow: 0 0 20px var(--primary-color);"></h2>
                             </div>
                         </div>
 
                         <div id="wq-gorev" class="webquest-section">
                             <h3>2. İŞLEM / GÖREV</h3>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">1. Görev (Derinlemesine Mekansal Analiz ve Belge Taramak):</span> Sana verdiğim linkler üzerinden teorik bilgileri araştırmanı ve işine yarayan kısımları seçmeni istiyorum. Sadece bunla yetinmeyip Google Earth sayesinde ülkenin yer şekillerini, sınırını, komşularını ve street view (sokak görünümü) ile binalarını, şehirleşme yapısını incele.</p>
-                            </div>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">2. Görev (Etkileşimli İçerik Üretmek):</span> Araştırdığın bilgileri kullanarak etkileşimli soru (boşluk doldurma, eşleştirme vb. olabilir) oluştur.</p>
-                            </div>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">3. Görev (Sentez):</span> Elde ettiğin tüm verileri ve hazırladığın etkileşimli soruları kullanarak görselliği ön planda olan bir slayt sunumu hazırla.</p>
-                            </div>
+                            <p><span class="bold-header">1. Görev (Derinlemesine Mekansal Analiz ve Belge Taramak):</span> Sana verdiğim linkler üzerinden teorik bilgileri araştırmanı ve işine yarayan kısımları seçmeni istiyorum. Sadece bunla yetinmeyip Google Earth sayesinde ülkenin yer şekillerini, sınırını, komşularını ve street view (sokak görünümü) ile binalarını, şehirleşme yapısını incele.</p>
+                            <p><span class="bold-header">2. Görev (Etkileşimli İçerik Üretmek):</span> Araştırdığın bilgileri kullanarak etkileşimli soru (boşluk doldurma, eşleştirme vb. olabilir) oluştur.</p>
+                            <p><span class="bold-header">3. Görev (Sentez):</span> Elde ettiğin tüm verileri ve hazırladığın etkileşimli soruları kullanarak görselliği ön planda olan bir slayt sunumu hazırla.</p>
                         </div>
 
                         <div id="wq-surec" class="webquest-section">
                             <h3>3. SÜREÇ</h3>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">1. Ülke Seçimi:</span> Çarkı çevir ve ülkeni öğren.</p>
-                            </div>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">2. Google Earth Keşfi:</span> Google Earth'ü aç. Ülkenin sınırını, komşularını, başkentini, fiziki unsurlarını ve street view (sokak görünümü) ile sokakları gez. Gözlemlerini bir yere not al.</p>
-                            </div>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">3. Teorik Bilgi Toplama:</span> Sana sunduğum sitelerden ülkene dair ilgini çeken ve önemli gördüğün bütün verileri topla. Google Akademik gibi siteleri kullanırken kendin istediğin makaleyi seçip inceleyebilirsin.</p>
-                            </div>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">4. Etkileşimli İçerik Üretme:</span> Etkileşimli içerik üretmek için Lumi uygulamasını bilgisayarına indir ya da web üzerinden giriş yap. Etkileşimli soru üretmene yardımcı olacak modüllerden birisini seç ve araştırmalar sonucunda elde ettiğin bilgileri kullanarak sorular üret. En az 1 en fazla 5 tane olsun.</p>
-                            </div>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">5. Slayt Yapımı ve Tasarım:</span> Slayt hazırlarken görselliğe önem ver. Google Earth ile ülkeni gezerken ekran görüntüleri alabilirsin. Slaytının sayfa sayısı 25-50 aralığında olsun. Yapay zeka araçları kullanma.</p>
-                            </div>
-                            <div class="wq-list-item">
-                                <p><span class="bold-header">6. Değerlendirme Kontrolü:</span> Çalışmanı bana teslim etmeden önce değerlendirmede sunduğum ölçekteki kriterleri kontrol et. Puanlamayı o ölçeği dikkate alarak yapacağım.</p>
-                            </div>
+                            <div class="wq-step"><p><span class="bold-header">1. Ülke Seçimi:</span> Çarkı çevir ve ülkeni öğren.</p></div>
+                            <div class="wq-step"><p><span class="bold-header">2. Google Earth Keşfi:</span> Google Earth'ü aç. Ülkenin sınırını, komşularını, başkentini, fiziki unsurlarını ve street view (sokak görünümü) ile sokakları gez. Gözlemlerini bir yere not al.</p></div>
+                            <div class="wq-step"><p><span class="bold-header">3. Teorik Bilgi Toplama:</span> Sana sunduğum sitelerden ülkene dair ilgini çeken ve önemli gördüğün bütün verileri topla. Google Akademik gibi siteleri kullanırken kendin istediğin makaleyi seçip inceleyebilirsin.</p></div>
+                            <div class="wq-step"><p><span class="bold-header">4. Etkileşimli İçerik Üretme:</span> Etkileşimli içerik üretmek için Lumi uygulamasını bilgisayarına indir ya da web üzerinden giriş yap. Etkileşimli soru üretmene yardımcı olacak modüllerden birisini seç ve araştırmalar sonucunda elde ettiğin bilgileri kullanarak sorular üret. En az 1 en fazla 5 tane olsun.</p></div>
+                            <div class="wq-step"><p><span class="bold-header">5. Slayt Yapımı ve Tasarım:</span> Slayt hazırlarken görselliğe önem ver. Google Earth ile ülkeni gezerken ekran görüntüleri alabilirsin. Slaytının sayfa sayısı 25-50 aralığında olsun. Yapay zeka araçları kullanma.</p></div>
+                            <div class="wq-step"><p><span class="bold-header">6. Değerlendirme Kontrolü:</span> Çalışmanı bana teslim etmeden önce değerlendirmede sunduğum ölçekteki kriterleri kontrol et. Puanlamayı o ölçeği dikkate alarak yapacağım.</p></div>
                         </div>
 
                         <div id="wq-kaynak" class="webquest-section">
                             <h3>4. BİLGİ KAYNAKLARI</h3>
                             <p><span class="bold-header">Genel Kaynaklar:</span><br>
-                            📊 TÜİK: <a href="https://www.tuik.gov.tr/" target="_blank" style="color:#fff">tuik.gov.tr</a><br>
-                            🌐 Coğrafya Dünyası Portalı: <a href="https://www.cografya.gen.tr/siyasi/devletler/" target="_blank" style="color:#fff">cografya.gen.tr</a><br>
-                            📖 Google Akademik: <a href="https://scholar.google.com/?hl=tr" target="_blank" style="color:#fff">scholar.google.com</a></p>
+                            📊 TÜİK: <a href="https://www.tuik.gov.tr/" target="_blank" style="color:white">tuik.gov.tr</a><br>
+                            🌐 Coğrafya Dünyası Portalı: <a href="https://www.cografya.gen.tr/siyasi/devletler/" target="_blank" style="color:white">cografya.gen.tr</a><br>
+                            📖 Google Akademik: <a href="https://scholar.google.com/?hl=tr" target="_blank" style="color:white">scholar.google.com</a></p>
                             
                             <p><span class="bold-header">Teknolojik Araçlar:</span><br>
-                            🌍 Google Earth: <a href="https://earth.google.com/web/" target="_blank" style="color:#fff">earth.google.com</a><br>
-                            🛠️ Lumi H5P Uygulaması: <a href="https://lumi.education/en/" target="_blank" style="color:#fff">lumi.education</a></p>
+                            🌍 Google Earth: <a href="https://earth.google.com/web/" target="_blank" style="color:white">earth.google.com</a><br>
+                            🛠️ Lumi H5P Uygulaması: <a href="https://lumi.education/en/" target="_blank" style="color:white">lumi.education</a></p>
                             
                             <p><span class="bold-header">Ülkeye Özel Kaynaklar:</span><br>
-                            🇯🇵 <a href="https://web-japan.org/" target="_blank" style="color:#fff">Japonya</a> | 🇩🇪 <a href="https://www.tatsachen-ueber-deutschland.de/en" target="_blank" style="color:#fff">Almanya</a> | 🇧🇷 <a href="https://www.ibge.gov.tr/en/" target="_blank" style="color:#fff">Brezilya</a> | 🇨🇳 <a href="http://www.china.org.cn/" target="_blank" style="color:#fff">Çin</a> | 🇷🇺 <a href="https://www.britannica.com/place/Russia" target="_blank" style="color:#fff">Rusya</a><br>
-                            🇪🇬 <a href="https://www.sis.gov.eg/" target="_blank" style="color:#fff">Mısır</a> | 🇨🇦 <a href="https://www.thecanadianencyclopedia.ca/en" target="_blank" style="color:#fff">Kanada</a> | 🇪🇸 <a href="https://www.ine.es/en/" target="_blank" style="color:#fff">İspanya</a> | 🇵🇱 <a href="https://stat.gov.pl/en/" target="_blank" style="color:#fff">Polonya</a> | 🇮🇩 <a href="https://www.bps.go.id/en" target="_blank" style="color:#fff">Endonezya</a></p>
+                            🇯🇵 Japonya: <a href="https://web-japan.org/" target="_blank" style="color:white">Web Japan</a> & <a href="https://www.stat.go.jp/english/" target="_blank" style="color:white">Statistics Japan</a><br>
+                            🇩🇪 Almanya: <a href="https://www.tatsachen-ueber-deutschland.de/en" target="_blank" style="color:white">Tatsachen über Deutschland</a> & <a href="https://www.destatis.de/EN/" target="_blank" style="color:white">Destatis</a><br>
+                            🇧🇷 Brezilya: <a href="https://www.ibge.gov.tr/en/" target="_blank" style="color:white">IBGE</a> & <a href="https://www.visitbrasil.com/" target="_blank" style="color:white">Visit Brazil</a><br>
+                            🇨🇳 Çin: <a href="http://www.china.org.cn/" target="_blank" style="color:white">China.org.cn</a> & <a href="http://www.stats.gov.cn/english/" target="_blank" style="color:white">NBS</a><br>
+                            🇷🇺 Rusya: <a href="https://www.britannica.com/place/Russia" target="_blank" style="color:white">Britannica Russia</a><br>
+                            🇪🇬 Mısır: <a href="https://www.sis.gov.eg/" target="_blank" style="color:white">SIS</a> & <a href="https://egypt.travel/" target="_blank" style="color:white">Experience Egypt</a><br>
+                            🇨🇦 Kanada: <a href="https://www.thecanadianencyclopedia.ca/en" target="_blank" style="color:white">Encyclopedia</a><br>
+                            🇪🇸 İspanya: <a href="https://www.ine.es/en/" target="_blank" style="color:white">INE</a> & <a href="https://www.spain.info/en/" target="_blank" style="color:white">Spain.info</a><br>
+                            🇵🇱 Polonya: <a href="https://stat.gov.pl/en/" target="_blank" style="color:white">Statistics Poland</a><br>
+                            🇮🇩 Endonezya: <a href="https://www.bps.go.id/en" target="_blank" style="color:white">BPS</a> & <a href="https://www.indonesia.travel/" target="_blank" style="color:white">Wonderful Indonesia</a></p>
                         </div>
 
                         <div id="wq-deger" class="webquest-section">
                             <h3>5. DEĞERLENDİRME</h3>
                             <table class="wq-table">
                                 <tr><th>Kriter</th><th>Gelişmeli (5p)</th><th>İyi (15p)</th><th>Harika (25p)</th></tr>
-                                <tr><td><span class="bold-header">Google Earth</span></td><td>Mekansal veri yok.</td><td>Genel görüntüler.</td><td>3D ve derin analiz.</td></tr>
-                                <tr><td><span class="bold-header">H5P Etkileşimi</span></td><td>Hatalı veya yok.</td><td>1-2 basit soru.</td><td>3+ yaratıcı soru.</td></tr>
-                                <tr><td><span class="bold-header">Bilgi Doğruluğu</span></td><td>Yanlış bilgiler.</td><td>Eski veya eksik.</td><td>Güncel ve akademik.</td></tr>
-                                <tr><td><span class="bold-header">Sunum Kalitesi</span></td><td>Zayıf/Karışık.</td><td>Düzenli ama sade.</td><td>Profesyonel denge.</td></tr>
+                                <tr><td>Google Earth Kullanımı</td><td>Mekansal veri kullanılmamış.</td><td>Sadece genel ekran görüntüleri var.</td><td>3D analizler ve koordinat odaklı veriler sunulmuş.</td></tr>
+                                <tr><td>H5P Etkileşimi</td><td>Soru üretilmemiş veya hatalı.</td><td>1-2 basit soru üretilmiş.</td><td>Lumi ile hatasız ve yaratıcı 3+ soru üretilmiş.</td></tr>
+                                <tr><td>Bilgi Doğruluğu</td><td>Yanlış bilgiler içeriyor.</td><td>Bazı veriler eski veya eksik.</td><td>Ham veriler güncel kaynaklarla desteklenmiş.</td></tr>
+                                <tr><td>Sunum Kalitesi</td><td>Karışık ve okunması zor.</td><td>Sunum düzenli ama görsellik zayıf.</td><td>Görsel ve metin dengesi profesyonel düzeyde.</td></tr>
                             </table>
                         </div>
 
                         <div id="wq-sonuc" class="webquest-section">
                             <h3>6. SONUÇ</h3>
                             <p>Tebrikler ajan, bu web macerası sonunda sadece bir ülkeyi her yönüyle tanımakla kalmadın, aynı zamanda etkileşimli sorular üreterek modern eğitim anlayışına uygun bir proje ortaya koydun. Diğer ajanlarla etkileşim içinde kalarak başka ülkelere dair bilgiler de öğrenebilirsin.</p>
-                            <div style="background: rgba(178, 8, 209, 0.2); padding: 40px; border-left: 12px solid var(--primary-color); margin-top: 40px;">
-                                <p style="margin:0; font-weight: bold;">⚠️ <span class="bold-header">Uyarıcı Soru:</span> Ajanlık yaparken araştırdığın bilgilerden hangileri kültürel şok yaşamana sebep oldu ve aynı kültür ülkemizde olsa buna adapte olabilir miydin? Cevabını sunumunun son sayfasına eklemeyi unutma.</p>
-                            </div>
+                            <p><span class="bold-header">Uyarıcı Soru:</span> Ajanlık yaparken araştırdığın bilgilerden hangileri kültürel şok yaşamana sebep oldu ve aynı kültür ülkemizde olsa buna adapte olabilir miydin? Cevabını sunumunun son sayfasına eklemeyi unutma.</p>
                         </div>
                     </div>
                 </div>
@@ -291,20 +273,20 @@
 
             <div id="video-oynatici-alani" style="display: none;">
                 <div style="text-align: left;"><button class="back-btn" onclick="dersAc('siyasi')"><i class="fas fa-arrow-left"></i> Listeye Dön</button></div>
-                <div id="iframe-container" style="border: 3px solid var(--primary-color); border-radius: 20px; overflow: hidden; background: #000;"></div>
+                <div id="iframe-container"></div>
             </div>
         </div>
     </main>
 
     <script>
-    // --- CURSOR SCRİPTİ ---
+    // --- CURSOR ---
     const cursor = document.querySelector('.custom-cursor');
     const aura = document.querySelector('.cursor-aura');
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
         aura.style.left = e.clientX + 'px'; aura.style.top = e.clientY + 'px';
     });
-    document.querySelectorAll('a, button, .ders-btn, .webquest-nav-btn').forEach(el => {
+    document.querySelectorAll('a, button, .ders-btn, .nav-btn, .back-btn, .webquest-nav-btn').forEach(el => {
         el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
         el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
     });
@@ -312,19 +294,23 @@
     // --- SES SİSTEMİ ---
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playWinSound() {
-        const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.type = 'square'; osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
-        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3); // A5
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2); // A5
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.6);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.5);
     }
 
-    // --- NAVİGASYON FONKSİYONLARI ---
+    // --- NAV FONKSİYONLARI ---
     function dersAc(dersId) {
         document.querySelectorAll('main > div > div').forEach(div => div.style.display = 'none');
-        document.getElementById('ders-' + dersId).style.display = 'block';
+        document.getElementById('dersler-listesi').style.display = 'none';
+        const selected = document.getElementById('ders-' + dersId);
+        if(selected) { selected.style.display = 'block'; }
     }
     function anaListeyeDon() {
         document.querySelectorAll('main > div > div').forEach(div => div.style.display = 'none');
@@ -346,43 +332,44 @@
         document.getElementById('video-oynatici-alani').style.display = 'block';
         const container = document.getElementById('iframe-container');
         if(videoKodu === 'video1') {
-            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/3PPSe8/embed" width="100%" height="700" frameborder="0" allowfullscreen></iframe>';
+            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/3PPSe8/embed" width="100%" height="600" frameborder="0" allowfullscreen></iframe>';
         } else if(videoKodu === 'video2') {
-            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/BKSx5Z/embed" width="100%" height="700" frameborder="0" allowfullscreen></iframe>';
+            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/BKSx5Z/embed" width="100%" height="600" frameborder="0" allowfullscreen></iframe>';
         }
     }
 
-    // --- ÇARK SİSTEMİ ---
+    // --- ÇARK ---
     function initWheel() {
         const canvas = document.getElementById('wheelCanvas'); const ctx = canvas.getContext('2d');
         const countries = ["Japonya", "Almanya", "Brezilya", "Çin", "Rusya", "Mısır", "Kanada", "İspanya", "Polonya", "Endonezya"];
         const colors = ["#b208d1", "#2c3e50", "#b208d1", "#2c3e50", "#b208d1", "#2c3e50", "#b208d1", "#2c3e50", "#b208d1", "#2c3e50"];
-        let startAngle = 0; let arc = Math.PI / (countries.length / 2); let spinTime = 0; let spinTimeTotal = 0;
+        let startAngle = 0; let arc = Math.PI / (countries.length / 2);
 
         function drawWheel() {
-            ctx.clearRect(0,0,500,500); ctx.font = 'bold 22px Segoe UI';
+            ctx.clearRect(0,0,400,400); ctx.font = 'bold 16px Segoe UI';
             for(let i = 0; i < countries.length; i++) {
                 let angle = startAngle + i * arc; ctx.fillStyle = colors[i];
-                ctx.beginPath(); ctx.arc(250, 250, 230, angle, angle + arc, false); ctx.lineTo(250, 250); ctx.fill();
-                ctx.save(); ctx.fillStyle = "white"; ctx.translate(250 + Math.cos(angle + arc / 2) * 165, 250 + Math.sin(angle + arc / 2) * 165);
+                ctx.beginPath(); ctx.arc(200, 200, 180, angle, angle + arc, false); ctx.lineTo(200, 200); ctx.fill();
+                ctx.save(); ctx.fillStyle = "white"; ctx.translate(200 + Math.cos(angle + arc / 2) * 130, 200 + Math.sin(angle + arc / 2) * 130);
                 ctx.rotate(angle + arc / 2 + Math.PI / 2); ctx.fillText(countries[i], -ctx.measureText(countries[i]).width / 2, 0); ctx.restore();
             }
         }
         function rotateWheel() {
-            spinTime += 30; if(spinTime >= spinTimeTotal) { stopRotateWheel(); return; }
-            let spinAngle = (spinTimeTotal - spinTime) / spinTimeTotal * 15;
-            startAngle += (spinAngle * Math.PI / 180); drawWheel(); setTimeout(rotateWheel, 30);
+            let spinTime = 0; let spinTimeTotal = Math.random() * 3000 + 4000;
+            function animate() {
+                spinTime += 30; if(spinTime >= spinTimeTotal) { stopRotateWheel(); return; }
+                let spinAngle = (spinTimeTotal - spinTime) / spinTimeTotal * 15;
+                startAngle += (spinAngle * Math.PI / 180); drawWheel(); setTimeout(animate, 30);
+            }
+            animate();
         }
         function stopRotateWheel() {
             let degrees = startAngle * 180 / Math.PI + 90; let arcd = arc * 180 / Math.PI;
             let index = Math.floor((360 - degrees % 360) / arcd);
-            document.getElementById('wheelResult').innerHTML = "AJAN, HEDEFİN: " + countries[index].toUpperCase();
+            document.getElementById('wheelResult').innerHTML = "GÖREVİN: " + countries[index].toUpperCase();
             playWinSound();
         }
-        document.getElementById('spinBtn').onclick = () => { 
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            spinTime = 0; spinTimeTotal = Math.random() * 3000 + 5000; rotateWheel(); 
-        };
+        document.getElementById('spinBtn').onclick = () => { if (audioCtx.state === 'suspended') audioCtx.resume(); rotateWheel(); };
         drawWheel();
     }
     </script>
