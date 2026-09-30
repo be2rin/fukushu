@@ -6,12 +6,22 @@
     <title>BE2RİN | Ödevler</title>
     <link rel="icon" type="image/png" href="../kan.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #b208d1;
             --bg-color: #0f0c29;
             --text-color: #ffffff;
             --sidebar-bg: rgba(0, 0, 0, 0.4);
+            
+            /* Dağlar Oyunu Renk Teması */
+            --earth-dark: #3e2723;
+            --earth-main: #5d4037;
+            --forest-green: #2e7d32;
+            --sand-bg: #f5f2eb;
+            --card-bg: #efebe9;
         }
 
         /* --- CURSOR --- */
@@ -41,7 +51,7 @@
         .cursor-active .custom-cursor { transform: translate(-50%, -50%) scale(2); background: white; }
         .cursor-active .cursor-aura { transform: translate(-50%, -50%) scale(1.5); border-color: white; opacity: 0.5; }
 
-        /* --- NAVİGASYON (Orijinal Tasarım) --- */
+        /* --- NAVİGASYON --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 50px; background: rgba(0, 0, 0, 0.8);
@@ -96,21 +106,15 @@
             background: var(--primary-color); color: white; transform: scale(1.05);
         }
 
-        /* WEBQUEST İÇERİK PUNTO AYARI (1.5 KAT BÜYÜTÜLMÜŞ) */
         .webquest-content { flex: 1; padding: 50px; overflow-y: auto; background: rgba(0,0,0,0.2); }
         .webquest-section { display: none; animation: fadeIn 0.3s; }
         .webquest-section.active { display: block; }
         
         .webquest-content p, .webquest-content li { font-size: 1.9rem; line-height: 1.6; margin-bottom: 35px; color: #fff; }
         .webquest-content h3 { font-size: 3.3rem; color: var(--primary-color); margin-bottom: 40px; border-bottom: 3px solid var(--primary-color); display: inline-block; }
-        
-        /* Kalın Başlıklar */
         .bold-header { font-weight: 900; color: var(--primary-color); }
-
-        /* Süreç Maddeleri Arası Boşluk */
         .wq-step { margin-bottom: 60px; }
 
-        /* Değerlendirme Tablosu (Tam Metin) */
         .wq-table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 1.4rem; }
         .wq-table th, .wq-table td { border: 1px solid rgba(255,255,255,0.2); padding: 25px; text-align: left; }
         .wq-table th { background: var(--primary-color); color: white; }
@@ -125,13 +129,124 @@
         }
         #wheelCanvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 0 30px rgba(178, 8, 209, 0.3); }
 
+        /* --- OYUN ALANI DÜZENİ --- */
+        .game-container {
+            display: flex;
+            height: 80vh;
+            background-color: var(--sand-bg);
+            color: #2c1d11;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+        }
+
+        .game-sidebar {
+            width: 320px;
+            background: linear-gradient(160deg, #f1eee8 0%, #e8e5dc 52%, #e3e8df 100%);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border-right: 3px solid #d7ccc8;
+            flex-shrink: 0;
+            text-align: left;
+        }
+
+        .game-sidebar h2 {
+            color: var(--earth-dark);
+            font-size: 1.4rem;
+            text-align: center;
+            font-weight: 700;
+            border-bottom: 2px solid #d7ccc8;
+            padding-bottom: 10px;
+        }
+
+        .btn-draw {
+            background-color: var(--forest-green);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+        }
+        .btn-draw:hover { background-color: #1b5e20; transform: translateY(-2px); }
+
+        .drawn-number-box {
+            background-color: #fbe9e7;
+            border: 2px dashed var(--earth-main);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .drawn-number-box span { display: block; font-size: 1rem; color: var(--earth-main); font-weight: 700; margin-bottom: 5px; }
+        .number-display { font-size: 3.5rem; font-weight: 700; color: var(--earth-dark); }
+
+        .status-msg { font-size: 1rem; padding: 12px; border-radius: 8px; text-align: center; display: none; font-weight: 700; }
+        .status-msg.success { background-color: #c8e6c9; color: #1b5e20; display: block; }
+        .status-msg.error { background-color: #ffcdd2; color: #b71c1c; display: block; }
+        .status-msg.info { background-color: #e1f5fe; color: #01579b; display: block; }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 45%, rgba(117, 145, 94, 0.18) 0%, rgba(117, 145, 94, 0.08) 30%, transparent 58%), linear-gradient(135deg, #ddd8cf 0%, #d7ddd0 48%, #c9d3c1 100%);
+            overflow: hidden;
+        }
+
+        .map-wrapper { position: relative; display: inline-block; max-width: 100%; max-height: 100%; }
+        .map-image { height: 75vh; width: auto; max-width: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+        .pin {
+            position: absolute; width: 34px; height: 34px;
+            background-color: var(--earth-dark); color: #fff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.05rem; box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            border: 3px solid #fff; transform: translate(-50%, -50%);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .pin:hover { transform: translate(-50%, -50%) scale(1.25); }
+        .pin.active { background-color: #f57c00; animation: pulse 0.8s infinite alternate; z-index: 5; }
+        .pin.correct { background-color: var(--forest-green); cursor: default; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(44, 29, 17, 0.6); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+        .modal-card {
+            background-color: var(--card-bg); padding: 30px; border-radius: 16px;
+            width: 380px; border: 3px solid var(--earth-main); box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center; transform: translateY(-20px); transition: transform 0.3s ease; color: var(--earth-dark);
+        }
+        .modal-overlay.open .modal-card { transform: translateY(0); }
+        .modal-card h3 { color: var(--earth-dark); margin-bottom: 15px; font-size: 1.4rem; }
+        .modal-card input {
+            width: 100%; padding: 12px; font-size: 1.1rem; border: 2px solid var(--earth-main);
+            border-radius: 8px; margin-bottom: 20px; outline: none; background-color: #fff;
+        }
+        .modal-buttons { display: flex; gap: 10px; }
+        .modal-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; }
+        .modal-btn.submit { background-color: var(--forest-green); color: white; }
+        .modal-btn.cancel { background-color: #a1887f; color: white; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-50%, -50%) scale(1.3); } }
+
         @media (max-width: 1000px) {
             .webquest-container { flex-direction: column; }
             .webquest-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--primary-color); }
-            .webquest-content p, .webquest-content li { font-size: 1.6rem; }
+            .game-container { flex-direction: column; height: auto; }
+            .game-sidebar { width: 100%; }
         }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -151,1096 +266,404 @@
     </nav>
 
     <main>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marmara Bölgesi Dağlar Oyunu</title>
-
-  <!-- PT Sans Font Entegrasyonu -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --earth-dark: #3e2723;
-      --earth-main: #5d4037;
-      --forest-green: #2e7d32;
-      --forest-light: #4caf50;
-      --sand-bg: #f5f2eb;
-      --card-bg: #efebe9;
-      --text-color: #2c1d11;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'PT Sans', sans-serif;
-    }
-
-    body {
-      display: flex;
-      height: 100vh;
-      background-color: var(--sand-bg);
-      color: var(--text-color);
-      overflow: hidden;
-    }
-
-    /* =========================================
-       SOL PANEL - DOĞA TEMASI
-       ========================================= */
-
-    .sidebar {
-      width: 340px;
-      background: linear-gradient(160deg, #f1eee8 0%, #e8e5dc 52%, #e3e8df 100%);
-      padding: 30px 20px;
-      box-shadow: 4px 0 15px rgba(62, 39, 35, 0.15);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 10;
-      border-right: 3px solid #d7ccc8;
-      flex-shrink: 0;
-    }
-
-    h2 {
-      color: var(--earth-dark);
-      font-size: 1.5rem;
-      text-align: center;
-      font-weight: 700;
-      border-bottom: 2px solid #d7ccc8;
-      padding-bottom: 10px;
-    }
-
-    .btn-draw {
-      background-color: var(--forest-green);
-      color: white;
-      border: none;
-      padding: 16px;
-      font-size: 1.15rem;
-      font-weight: 700;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-      transition: all 0.2s;
-    }
-
-    .btn-draw:hover {
-      background-color: #1b5e20;
-      transform: translateY(-2px);
-    }
-
-    .btn-draw:active {
-      transform: translateY(0);
-    }
-
-    .drawn-number-box {
-      background-color: #fbe9e7;
-      border: 2px dashed var(--earth-main);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .drawn-number-box span {
-      display: block;
-      font-size: 1rem;
-      color: var(--earth-main);
-      font-weight: 700;
-      margin-bottom: 5px;
-    }
-
-    .number-display {
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--earth-dark);
-    }
-
-    .status-msg {
-      font-size: 1rem;
-      padding: 12px;
-      border-radius: 8px;
-      text-align: center;
-      display: none;
-      font-weight: 700;
-    }
-
-    .status-msg.success {
-      background-color: #c8e6c9;
-      color: #1b5e20;
-      display: block;
-    }
-
-    .status-msg.error {
-      background-color: #ffcdd2;
-      color: #b71c1c;
-      display: block;
-    }
-
-    .status-msg.info {
-      background-color: #e1f5fe;
-      color: #01579b;
-      display: block;
-    }
-
-    /* =========================================
-       HARİTA ALANI
-       ========================================= */
-
-    .map-container {
-      flex: 1;
-      height: 100vh;
-      min-width: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 50% 45%, rgba(117, 145, 94, 0.18) 0%, rgba(117, 145, 94, 0.08) 30%, transparent 58%), linear-gradient(135deg, #ddd8cf 0%, #d7ddd0 48%, #c9d3c1 100%);
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .map-wrapper {
-      position: relative;
-      display: inline-block;
-      max-width: 100%;
-      max-height: 100vh;
-    }
-
-    .map-image {
-      height: 100vh;
-      width: auto;
-      max-width: 100%;
-      max-height: 100vh;
-      object-fit: contain;
-      display: block;
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-
-    /* =========================================
-       HARİTA ÜZERİNDEKİ PİMLER
-       ========================================= */
-
-    .pin {
-      position: absolute;
-
-      /* Öncekinden biraz daha küçük ve temiz */
-      width: 34px;
-      height: 34px;
-
-      background-color: var(--earth-dark);
-      color: #fff;
-
-      border-radius: 50%;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-weight: 700;
-      font-size: 1.05rem;
-
-      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-
-      cursor: pointer;
-
-      border: 3px solid #fff;
-
-      /* Koordinatın tam merkezine oturtur */
-      transform: translate(-50%, -50%);
-
-      transition:
-        transform 0.2s,
-        background-color 0.2s;
-    }
-
-    .pin:hover {
-      transform: translate(-50%, -50%) scale(1.25);
-    }
-
-    .pin.active {
-      background-color: #f57c00;
-      animation: pulse 0.8s infinite alternate;
-      z-index: 5;
-    }
-
-    .pin.correct {
-      background-color: var(--forest-green);
-      cursor: default;
-    }
-
-    @keyframes pulse {
-      from {
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      to {
-        transform: translate(-50%, -50%) scale(1.3);
-      }
-    }
-
-    /* =========================================
-       CEVAP MODALI
-       ========================================= */
-
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-
-      width: 100vw;
-      height: 100vh;
-
-      background: rgba(44, 29, 17, 0.6);
-      backdrop-filter: blur(4px);
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      z-index: 100;
-
-      opacity: 0;
-      pointer-events: none;
-
-      transition: opacity 0.3s ease;
-    }
-
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-card {
-      background-color: var(--card-bg);
-
-      padding: 30px;
-      border-radius: 16px;
-
-      width: 380px;
-
-      border: 3px solid var(--earth-main);
-
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-
-      text-align: center;
-
-      transform: translateY(-20px);
-
-      transition: transform 0.3s ease;
-    }
-
-    .modal-overlay.open .modal-card {
-      transform: translateY(0);
-    }
-
-    .modal-card h3 {
-      color: var(--earth-dark);
-      margin-bottom: 15px;
-      font-size: 1.4rem;
-    }
-
-    .modal-card input {
-      width: 100%;
-
-      padding: 12px;
-
-      font-size: 1.1rem;
-
-      border: 2px solid var(--earth-main);
-      border-radius: 8px;
-
-      margin-bottom: 20px;
-
-      outline: none;
-
-      background-color: #fff;
-    }
-
-    .modal-card input:focus {
-      border-color: var(--forest-green);
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .modal-btn {
-      flex: 1;
-
-      padding: 12px;
-
-      border: none;
-      border-radius: 8px;
-
-      font-weight: 700;
-      font-size: 1rem;
-
-      cursor: pointer;
-    }
-
-    .modal-btn.submit {
-      background-color: var(--forest-green);
-      color: white;
-    }
-
-    .modal-btn.cancel {
-      background-color: #a1887f;
-      color: white;
-    }
-
-    .modal-btn.submit:hover {
-      background-color: #1b5e20;
-    }
-
-    .modal-btn.cancel:hover {
-      background-color: #795548;
-    }
-
-    /* =========================================
-       DAHA KÜÇÜK EKRANLAR
-       ========================================= */
-
-    @media (max-width: 900px) {
-      .sidebar {
-        width: 280px;
-      }
-
-      h2 {
-        font-size: 1.25rem;
-      }
-
-      .pin {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- =========================================
-       SOL MENÜ
-       ========================================= -->
-
-  <div class="sidebar">
-
-    <h2>Marmara Bölgesi Dağlar Oyunu</h2>
-
-    <button class="btn-draw" id="drawBtn">
-      🎲
-    </button>
-
-    <div class="drawn-number-box">
-
-      <span>Numara</span>
-
-      <div class="number-display" id="numDisplay">
-        -
-      </div>
-
+        <div class="page-content">
+            <!-- DERS LİSTESİ -->
+            <div id="dersler-listesi">
+                <h1>Ödevler ve Sunumlar</h1>
+                <p style="font-size: 1.3rem; color: #ccc;">İçeriğini görmek istediğiniz dersi seçiniz:</p>
+                <button class="ders-btn" onclick="dersAc('siyasi')"><i class="fas fa-globe"></i> Siyasi Coğrafya</button>
+                <button class="ders-btn" onclick="dersAc('sistem')"><i class="fas fa-microchip"></i> Teknoloji Temelli Coğrafya</button>
+                <button class="ders-btn" onclick="dersAc('olcme')"><i class="fas fa-book"></i> Türk Eğitim Sistemi ve Okul Yönetimi</button>
+            </div>
+
+            <!-- TEKNOLOJİ TEMELLİ COĞRAFYA MENÜSÜ -->
+            <div id="ders-sistem" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
+                <h1>Teknoloji Temelli Coğrafya</h1>
+                <button class="ders-btn" onclick="webQuestAc()"><i class="fas fa-user-secret"></i> WebQuest Örneği (Dijital Coğrafya Ajanları)</button>
+                <button class="ders-btn" onclick="oyunAc()"><i class="fas fa-mountain"></i> Marmara Bölgesi Dağlar Oyunu</button>
+                <button class="ders-btn" onclick="alert('Sunum Henüz Hazır Değil.')"><i class="fas fa-file-powerpoint"></i> Sunum</button>
+            </div>
+
+            <!-- SİYASİ COĞRAFYA MENÜSÜ -->
+            <div id="ders-siyasi" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
+                <h1>Siyasi Coğrafya</h1>
+                <button class="ders-btn" onclick="icerikAc('video1')"><i class="fas fa-play-circle"></i> Video 1</button>
+                <button class="ders-btn" onclick="icerikAc('video2')"><i class="fas fa-play-circle"></i> Video 2</button>
+            </div>
+
+            <!-- TÜRK EĞİTİM SİSTEMİ MENÜSÜ -->
+            <div id="ders-olcme" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="anaListeyeDon()"><i class="fas fa-arrow-left"></i> Geri Dön</button></div>
+                <h1>Türk Eğitim Sistemi ve Okul Yönetimi</h1>
+                <button class="ders-btn" onclick="alert('Sunum Yakında Yüklenecek.')">Sunum</button>
+            </div>
+
+            <!-- WEBQUEST ALANI -->
+            <div id="webquest-alani" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="dersAc('sistem')"><i class="fas fa-arrow-left"></i> Listeye Dön</button></div>
+                
+                <div class="webquest-container">
+                    <div class="webquest-sidebar">
+                        <button class="webquest-nav-btn active" onclick="wqSekmeAc('wq-giris', this)">1. GİRİŞ</button>
+                        <button class="webquest-nav-btn" onclick="wqSekmeAc('wq-gorev', this)">2. İŞLEM / GÖREV</button>
+                        <button class="webquest-nav-btn" onclick="wqSekmeAc('wq-surec', this)">3. SÜREÇ</button>
+                        <button class="webquest-nav-btn" onclick="wqSekmeAc('wq-kaynak', this)">4. BİLGİ KAYNAKLARI</button>
+                        <button class="webquest-nav-btn" onclick="wqSekmeAc('wq-deger', this)">5. DEĞERLENDİRME</button>
+                        <button class="webquest-nav-btn" onclick="wqSekmeAc('wq-sonuc', this)">6. SONUÇ</button>
+                    </div>
+
+                    <div class="webquest-content">
+                        <div id="wq-giris" class="webquest-section active">
+                            <h3>1. GİRİŞ</h3>
+                            <p>Merhaba genç, farklı bir bedenle dünyaya yeniden geldin. Burgonya İstihbarat Teşkilatı başkanı Sigurd tarafından işe alındın. Aşağıda bulunan çarkı çevirdikten sonra çıkan ülkeyi fiziksel, ekonomik ve sosyal açılardan analiz etmeni ve konseyimiz için etkileşimli bir öğrenme deneyimi tasarlamanı bekliyoruz.</p>
+                            
+                            <div id="wheel-container">
+                                <div id="wheel-wrapper">
+                                    <div id="wheel-pointer"></div>
+                                    <canvas id="wheelCanvas" width="400" height="400"></canvas>
+                                </div>
+                                <button id="spinBtn" class="ders-btn" style="width: auto; margin-top: 40px; padding: 20px 40px; justify-content: center; font-size: 2rem;">
+                                    <i class="fas fa-sync-alt"></i> KADER ÇARKINI ÇEVİR
+                                </button>
+                                <h2 id="wheelResult" style="margin-top: 30px; font-size: 3rem; color: #fff; text-shadow: 0 0 20px var(--primary-color);"></h2>
+                            </div>
+                        </div>
+
+                        <div id="wq-gorev" class="webquest-section">
+                            <h3>2. İŞLEM / GÖREV</h3>
+                            <p><span class="bold-header">1. Görev:</span> Sana verdiğim linkler üzerinden teorik bilgileri araştırmanı istiyoruz.</p>
+                            <p><span class="bold-header">2. Görev:</span> Araştırdığın bilgileri kullanarak etkileşimli sorular üret.</p>
+                            <p><span class="bold-header">3. Görev:</span> Sunum slaytı hazırla.</p>
+                        </div>
+
+                        <div id="wq-surec" class="webquest-section">
+                            <h3>3. SÜREÇ</h3>
+                            <div class="wq-step"><p><span class="bold-header">1. Ülke Seçimi:</span> Çarkı çevir ve ülkeni öğren.</p></div>
+                            <div class="wq-step"><p><span class="bold-header">2. Google Earth Keşfi:</span> Ülkenin fiziki unsurlarını incele.</p></div>
+                        </div>
+
+                        <div id="wq-kaynak" class="webquest-section">
+                            <h3>4. BİLGİ KAYNAKLARI</h3>
+                            <p><span class="bold-header">Genel Kaynaklar:</span> TÜİK, Coğrafya Dünyası Portalı, Google Akademik</p>
+                        </div>
+
+                        <div id="wq-deger" class="webquest-section">
+                            <h3>5. DEĞERLENDİRME</h3>
+                            <table class="wq-table">
+                                <tr><th>Kriter</th><th>Gelişmeli (5p)</th><th>İyi (15p)</th><th>Harika (25p)</th></tr>
+                                <tr><td>Google Earth Kullanımı</td><td>Veri yok.</td><td>Genel görseller var.</td><td>3D detaylar sunulmuş.</td></tr>
+                            </table>
+                        </div>
+
+                        <div id="wq-sonuc" class="webquest-section">
+                            <h3>6. SONUÇ</h3>
+                            <p>Tebrikler ajan, bu projenin sonuna geldin!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MARMARA BÖLGESİ DAĞLAR OYUNU ALANI -->
+            <div id="oyun-alani" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="dersAc('sistem')"><i class="fas fa-arrow-left"></i> Listeye Dön</button></div>
+                
+                <div class="game-container">
+                    <div class="game-sidebar">
+                        <h2>Marmara Bölgesi Dağlar Oyunu</h2>
+                        <button class="btn-draw" id="drawBtn">🎲 Şansını Dene</button>
+                        <div class="drawn-number-box">
+                            <span>ÇEKİLEN NUMARA</span>
+                            <div class="number-display" id="numDisplay">-</div>
+                        </div>
+                        <div id="statusMsg" class="status-msg"></div>
+                    </div>
+
+                    <div class="map-container">
+                        <div class="map-wrapper">
+                            <img src="harita.png" alt="Marmara Haritası" class="map-image">
+
+                            <div class="pin" style="top: 15.66%; left: 38.84%;" data-id="1">1</div>
+                            <div class="pin" style="top: 43.58%; left: 22.22%;" data-id="2">2</div>
+                            <div class="pin" style="top: 40.94%; left: 31.23%;" data-id="3">3</div>
+                            <div class="pin" style="top: 41.13%; left: 67.93%;" data-id="4">4</div>
+                            <div class="pin" style="top: 52.83%; left: 66.53%;" data-id="5">5</div>
+                            <div class="pin" style="top: 62.08%; left: 73.84%;" data-id="6">6</div>
+                            <div class="pin" style="top: 60.75%; left: 47.12%;" data-id="7">7</div>
+                            <div class="pin" style="top: 65.85%; left: 29.11%;" data-id="8">8</div>
+                            <div class="pin" style="top: 58.30%; left: 28.84%;" data-id="9">9</div>
+                            <div class="pin" style="top: 77.83%; left: 20.25%;" data-id="10">10</div>
+                            <div class="pin" style="top: 69.43%; left: 63.57%;" data-id="11">11</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VİDEO OYNATICI ALANI -->
+            <div id="video-oynatici-alani" style="display: none;">
+                <div style="text-align: left;"><button class="back-btn" onclick="dersAc('siyasi')"><i class="fas fa-arrow-left"></i> Listeye Dön</button></div>
+                <div id="iframe-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- OYUN MODALI -->
+    <div class="modal-overlay" id="answerModal">
+        <div class="modal-card">
+            <h3 id="modalTitle">1 Numaralı Dağın Adı Nedir?</h3>
+            <input type="text" id="answerInput" placeholder="Cevabınızı buraya yazın..." autocomplete="off">
+            <div class="modal-buttons">
+                <button class="modal-btn submit" id="submitBtn">Cevapla</button>
+                <button class="modal-btn cancel" id="cancelBtn">İptal</button>
+            </div>
+        </div>
     </div>
 
-    <div id="statusMsg" class="status-msg"></div>
+    <script>
+    /* --- CURSOR KONTROLLERİ --- */
+    const cursor = document.querySelector('.custom-cursor');
+    const aura = document.querySelector('.cursor-aura');
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+        aura.style.left = e.clientX + 'px'; aura.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .ders-btn, .nav-btn, .back-btn, .webquest-nav-btn, .pin').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+    });
 
-  </div>
+    /* --- NAVİGASYON --- */
+    function dersAc(dersId) {
+        document.querySelectorAll('main > div > div').forEach(div => div.style.display = 'none');
+        document.getElementById('dersler-listesi').style.display = 'none';
+        const selected = document.getElementById('ders-' + dersId);
+        if(selected) { selected.style.display = 'block'; }
+    }
+    function anaListeyeDon() {
+        document.querySelectorAll('main > div > div').forEach(div => div.style.display = 'none');
+        document.getElementById('dersler-listesi').style.display = 'block';
+    }
+    function webQuestAc() {
+        document.getElementById('ders-sistem').style.display = 'none';
+        document.getElementById('webquest-alani').style.display = 'block';
+        initWheel();
+    }
+    function oyunAc() {
+        document.getElementById('ders-sistem').style.display = 'none';
+        document.getElementById('oyun-alani').style.display = 'block';
+    }
+    function wqSekmeAc(sectionId, btn) {
+        document.querySelectorAll('.webquest-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.webquest-nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        btn.classList.add('active');
+    }
+    function icerikAc(videoKodu) {
+        document.getElementById('ders-siyasi').style.display = 'none';
+        document.getElementById('video-oynatici-alani').style.display = 'block';
+        const container = document.getElementById('iframe-container');
+        if(videoKodu === 'video1') {
+            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/3PPSe8/embed" width="100%" height="600" frameborder="0" allowfullscreen></iframe>';
+        } else if(videoKodu === 'video2') {
+            container.innerHTML = '<iframe src="https://app.lumi.education/api/v1/run/BKSx5Z/embed" width="100%" height="600" frameborder="0" allowfullscreen></iframe>';
+        }
+    }
 
+    /* --- ÇARK MANTIĞI --- */
+    function initWheel() {
+        const canvas = document.getElementById('wheelCanvas'); const ctx = canvas.getContext('2d');
+        const countries = ["Japonya", "Almanya", "Brezilya", "Çin", "Rusya", "Mısır", "Kanada", "İspanya", "Polonya", "Endonezya"];
+        const colors = ["#b208d1", "#2c3e50", "#b208d1", "#2c3e50", "#b208d1", "#2c3e50", "#b208d1", "#2c3e50", "#b208d1", "#2c3e50"];
+        let startAngle = 0; let arc = Math.PI / (countries.length / 2);
 
-  <!-- =========================================
-       HARİTA ALANI
-       ========================================= -->
+        function drawWheel() {
+            ctx.clearRect(0,0,400,400); ctx.font = 'bold 16px Segoe UI';
+            for(let i = 0; i < countries.length; i++) {
+                let angle = startAngle + i * arc; ctx.fillStyle = colors[i];
+                ctx.beginPath(); ctx.arc(200, 200, 180, angle, angle + arc, false); ctx.lineTo(200, 200); ctx.fill();
+                ctx.save(); ctx.fillStyle = "white"; ctx.translate(200 + Math.cos(angle + arc / 2) * 130, 200 + Math.sin(angle + arc / 2) * 130);
+                ctx.rotate(angle + arc / 2 + Math.PI / 2); ctx.fillText(countries[i], -ctx.measureText(countries[i]).width / 2, 0); ctx.restore();
+            }
+        }
+        function rotateWheel() {
+            let spinTime = 0; let spinTimeTotal = Math.random() * 3000 + 4000;
+            function animate() {
+                spinTime += 30; if(spinTime >= spinTimeTotal) { stopRotateWheel(); return; }
+                let spinAngle = (spinTimeTotal - spinTime) / spinTimeTotal * 15;
+                startAngle += (spinAngle * Math.PI / 180); drawWheel(); setTimeout(animate, 30);
+            }
+            animate();
+        }
+        function stopRotateWheel() {
+            let degrees = startAngle * 180 / Math.PI + 90; let arcd = arc * 180 / Math.PI;
+            let index = Math.floor((360 - degrees % 360) / arcd);
+            document.getElementById('wheelResult').innerHTML = "GÖREVİN: " + countries[index].toUpperCase();
+        }
+        document.getElementById('spinBtn').onclick = () => { rotateWheel(); };
+        drawWheel();
+    }
 
-  <div class="map-container">
-
-    <div class="map-wrapper">
-
-      <img
-        src="harita.png"
-        alt="Marmara Haritası"
-        class="map-image"
-      >
-
-
-      <!--
-        PİMLER
-
-        Koordinatlar gönderdiğin 711x530 px
-        harita görselindeki dağ sembollerine göre
-        yeniden ayarlanmıştır.
-      -->
-
-
-      <!-- 1 - Yıldız / Istranca -->
-      <div
-        class="pin"
-        style="top: 15.66%; left: 38.84%;"
-        data-id="1"
-      >
-        1
-      </div>
-
-
-      <!-- 2 - Koru -->
-      <div
-        class="pin"
-        style="top: 43.58%; left: 22.22%;"
-        data-id="2"
-      >
-        2
-      </div>
-
-
-      <!-- 3 - Işıklar / Ganos -->
-      <div
-        class="pin"
-        style="top: 40.94%; left: 31.23%;"
-        data-id="3"
-      >
-        3
-      </div>
-
-
-      <!-- 4 - Aydos -->
-      <div
-        class="pin"
-        style="top: 41.13%; left: 67.93%;"
-        data-id="4"
-      >
-        4
-      </div>
-
-
-      <!-- 5 - Samanlı -->
-      <div
-        class="pin"
-        style="top: 52.83%; left: 66.53%;"
-        data-id="5"
-      >
-        5
-      </div>
-
-
-      <!-- 6 - Katırlı -->
-      <div
-        class="pin"
-        style="top: 62.08%; left: 73.84%;"
-        data-id="6"
-      >
-        6
-      </div>
-
-
-      <!-- 7 - Karadağ -->
-      <div
-        class="pin"
-        style="top: 60.75%; left: 47.12%;"
-        data-id="7"
-      >
-        7
-      </div>
-
-
-      <!-- 8 - Dede -->
-      <div
-        class="pin"
-        style="top: 65.85%; left: 29.11%;"
-        data-id="8"
-      >
-        8
-      </div>
-
-
-      <!-- 9 - Biga -->
-      <div
-        class="pin"
-        style="top: 58.30%; left: 28.84%;"
-        data-id="9"
-      >
-        9
-      </div>
-
-
-      <!-- 10 - Kaz Dağları -->
-      <div
-        class="pin"
-        style="top: 77.83%; left: 20.25%;"
-        data-id="10"
-      >
-        10
-      </div>
-
-
-      <!-- 11 - Uludağ -->
-      <div
-        class="pin"
-        style="top: 69.43%; left: 63.57%;"
-        data-id="11"
-      >
-        11
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================================
-       CEVAP MODALI
-       ========================================= -->
-
-  <div class="modal-overlay" id="answerModal">
-
-    <div class="modal-card">
-
-      <h3 id="modalTitle">
-        1 Numaralı Dağın Adı Nedir?
-      </h3>
-
-      <input
-        type="text"
-        id="answerInput"
-        placeholder="Cevabınızı buraya yazın..."
-        autocomplete="off"
-      >
-
-      <div class="modal-buttons">
-
-        <button
-          class="modal-btn submit"
-          id="submitBtn"
-        >
-          Cevapla
-        </button>
-
-        <button
-          class="modal-btn cancel"
-          id="cancelBtn"
-        >
-          İptal
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================================
-       JAVASCRIPT
-       ========================================= -->
-
-  <script>
-
-    // =========================================
-    // DOĞRU CEVAPLAR
-    // =========================================
-
+    /* --- MARMARA DAĞLAR OYUNU MANTIĞI --- */
     const answers = {
-
-      1: [
-        "yıldız",
-        "yıldız dağları",
-        "ıstranca",
-        "Istranca"
-      ],
-
-      2: [
-        "koru",
-        "koru dağları"
-      ],
-
-      3: [
-        "ışıklar",
-        "ışıklar dağı",
-        "ganos"
-      ],
-
-      4: [
-        "aydos"
-      ],
-
-      5: [
-        "samanlı",
-        "samanlı dağları"
-      ],
-
-      6: [
-        "katırlı"
-      ],
-
-      7: [
-        "karadağ"
-      ],
-
-      8: [
-        "dede",
-        "dede dağı"
-      ],
-
-      9: [
-        "biga"
-      ],
-
-      10: [
-        "kaz",
-        "kaz dağı",
-        "kaz dağları"
-      ],
-
-      11: [
-        "uludağ"
-      ]
-
+        1: ["yıldız", "yıldız dağları", "ıstranca", "Istranca"],
+        2: ["koru", "koru dağları"],
+        3: ["ışıklar", "ışıklar dağı", "ganos"],
+        4: ["aydos"],
+        5: ["samanlı", "samanlı dağları"],
+        6: ["katırlı"],
+        7: ["karadağ"],
+        8: ["dede", "dede dağı"],
+        9: ["biga"],
+        10: ["kaz", "kaz dağı", "kaz dağları"],
+        11: ["uludağ"]
     };
 
-
-    // =========================================
-    // OYUN DEĞİŞKENLERİ
-    // =========================================
-
     let drawnNumber = null;
-
     let completedNumbers = [];
-
     let selectedPinId = null;
 
+    const drawBtn = document.getElementById('drawBtn');
+    const numDisplay = document.getElementById('numDisplay');
+    const statusMsg = document.getElementById('statusMsg');
+    const pins = document.querySelectorAll('.pin');
 
-    // =========================================
-    // HTML ELEMANLARI
-    // =========================================
-
-    const drawBtn =
-      document.getElementById('drawBtn');
-
-    const numDisplay =
-      document.getElementById('numDisplay');
-
-    const statusMsg =
-      document.getElementById('statusMsg');
-
-    const pins =
-      document.querySelectorAll('.pin');
-
-
-    // Modal elemanları
-
-    const modalOverlay =
-      document.getElementById('answerModal');
-
-    const modalTitle =
-      document.getElementById('modalTitle');
-
-    const answerInput =
-      document.getElementById('answerInput');
-
-    const submitBtn =
-      document.getElementById('submitBtn');
-
-    const cancelBtn =
-      document.getElementById('cancelBtn');
-
-
-    // =========================================
-    // OYUN SESLERİ
-    // Web Audio API ile doğrudan üretilir; harici MP3 gerekmez.
-    // =========================================
+    const modalOverlay = document.getElementById('answerModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const answerInput = document.getElementById('answerInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
 
     let audioContext = null;
 
     function getAudioContext() {
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioContext.state === 'suspended') {
-        audioContext.resume();
-      }
-      return audioContext;
+        if (!audioContext) { audioContext = new (window.AudioContext || window.webkitAudioContext)(); }
+        if (audioContext.state === 'suspended') { audioContext.resume(); }
+        return audioContext;
     }
 
     function playTone(frequency, duration, type = 'sine', volume = 0.06, delay = 0) {
-      const ctx = getAudioContext();
-      const now = ctx.currentTime + delay;
-      const oscillator = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      oscillator.type = type;
-      oscillator.frequency.setValueAtTime(frequency, now);
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(volume, now + 0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-      oscillator.connect(gain);
-      gain.connect(ctx.destination);
-      oscillator.start(now);
-      oscillator.stop(now + duration + 0.02);
+        const ctx = getAudioContext();
+        const now = ctx.currentTime + delay;
+        const oscillator = ctx.createOscillator();
+        const gain = ctx.createGain();
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(frequency, now);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(volume, now + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        oscillator.connect(gain); gain.connect(ctx.destination);
+        oscillator.start(now); oscillator.stop(now + duration + 0.02);
     }
 
     function playSuccessSound() {
-      playTone(523.25, 0.12, 'sine', 0.055);
-      playTone(659.25, 0.16, 'sine', 0.055, 0.08);
-      playTone(783.99, 0.20, 'sine', 0.045, 0.17);
+        playTone(523.25, 0.12, 'sine', 0.055);
+        playTone(659.25, 0.16, 'sine', 0.055, 0.08);
+        playTone(783.99, 0.20, 'sine', 0.045, 0.17);
     }
 
     function playWrongSound() {
-      playTone(220, 0.16, 'triangle', 0.055);
-      playTone(165, 0.22, 'triangle', 0.045, 0.11);
+        playTone(220, 0.16, 'triangle', 0.055);
+        playTone(165, 0.22, 'triangle', 0.045, 0.11);
     }
 
     function playVictorySound() {
-      playTone(523.25, 0.16, 'sine', 0.06);
-      playTone(659.25, 0.16, 'sine', 0.06, 0.13);
-      playTone(783.99, 0.18, 'sine', 0.06, 0.26);
-      playTone(1046.50, 0.42, 'sine', 0.07, 0.40);
+        playTone(523.25, 0.16, 'sine', 0.06);
+        playTone(659.25, 0.16, 'sine', 0.06, 0.13);
+        playTone(783.99, 0.18, 'sine', 0.06, 0.26);
+        playTone(1046.50, 0.42, 'sine', 0.07, 0.40);
     }
-
-
-    // =========================================
-    // ŞANSINI DENE
-    // =========================================
 
     drawBtn.addEventListener('click', () => {
-
-      // Tüm dağlar tamamlandıysa
-
-      if (completedNumbers.length === 11) {
-
-        showStatus(
-          "Tebrikler! Tüm dağları tamamladınız!",
-          "success"
-        );
-
-        return;
-      }
-
-
-      // Henüz cevaplanmamış numaraları bul
-
-      let availableNumbers = [];
-
-
-      for (let i = 1; i <= 11; i++) {
-
-        if (!completedNumbers.includes(i)) {
-
-          availableNumbers.push(i);
-
+        if (completedNumbers.length === 11) {
+            showStatus("Tebrikler! Tüm dağları tamamladınız!", "success");
+            return;
         }
 
-      }
-
-
-      // Rastgele numara seç
-
-      const randomIndex =
-        Math.floor(
-          Math.random() * availableNumbers.length
-        );
-
-
-      drawnNumber =
-        availableNumbers[randomIndex];
-
-
-      // Sol panelde numarayı göster
-
-      numDisplay.innerText =
-        drawnNumber;
-
-
-      // Kullanıcıya mesaj göster
-
-      showStatus(
-        `${drawnNumber} numaralı dağın üzerine tıklayınız.`,
-        "info"
-      );
-
-
-      // Pimlerin aktif durumunu güncelle
-
-      pins.forEach(pin => {
-
-        if (
-          parseInt(pin.dataset.id) === drawnNumber
-        ) {
-
-          pin.classList.add('active');
-
-        } else {
-
-          pin.classList.remove('active');
-
+        let availableNumbers = [];
+        for (let i = 1; i <= 11; i++) {
+            if (!completedNumbers.includes(i)) { availableNumbers.push(i); }
         }
 
-      });
+        const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+        drawnNumber = availableNumbers[randomIndex];
+        numDisplay.innerText = drawnNumber;
+        showStatus(`${drawnNumber} numaralı dağın üzerine tıklayınız.`, "info");
 
+        pins.forEach(pin => {
+            if (parseInt(pin.dataset.id) === drawnNumber) {
+                pin.classList.add('active');
+            } else {
+                pin.classList.remove('active');
+            }
+        });
     });
-
-
-    // =========================================
-    // PİME TIKLAMA
-    // =========================================
 
     pins.forEach(pin => {
+        pin.addEventListener('click', function() {
+            const pinId = parseInt(this.dataset.id);
+            if (completedNumbers.includes(pinId)) {
+                showStatus("Bu dağın cevabını zaten bildiniz!", "info");
+                return;
+            }
+            if (drawnNumber === null) {
+                showStatus("Lütfen önce zar butonuna tıklayınız.", "error");
+                return;
+            }
+            if (pinId !== drawnNumber) {
+                showStatus(`Lütfen ${drawnNumber} numaralı butona tıklayınız.`, "error");
+                return;
+            }
 
-      pin.addEventListener('click', function() {
-
-        const pinId =
-          parseInt(this.dataset.id);
-
-
-        // Daha önce tamamlanmış mı?
-
-        if (
-          completedNumbers.includes(pinId)
-        ) {
-
-          showStatus(
-            "Bu dağın cevabını zaten bildiniz!",
-            "info"
-          );
-
-          return;
-        }
-
-
-        // Önce numara çekilmiş mi?
-
-        if (drawnNumber === null) {
-
-          showStatus(
-            "Lütfen önce zar butonuna tıklayınız.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        // Yanlış pime basıldıysa
-
-        if (pinId !== drawnNumber) {
-
-          showStatus(
-            `Lütfen ${drawnNumber} numaralı butona tıklayınız.`,
-            "error"
-          );
-
-          return;
-        }
-
-
-        // Doğru pime basıldı
-
-        selectedPinId =
-          pinId;
-
-
-        openModal(pinId);
-
-      });
-
+            selectedPinId = pinId;
+            openModal(pinId);
+        });
     });
 
-
-    // =========================================
-    // MODAL AÇ
-    // =========================================
-
     function openModal(pinId) {
-
-      modalTitle.innerText =
-        `${pinId} Numaralı Dağın Adı Nedir?`;
-
-
-      answerInput.value = "";
-
-
-      modalOverlay.classList.add('open');
-
-
-      setTimeout(() => {
-
-        answerInput.focus();
-
-      }, 100);
-
+        modalTitle.innerText = `${pinId} Numaralı Dağın Adı Nedir?`;
+        answerInput.value = "";
+        modalOverlay.classList.add('open');
+        setTimeout(() => { answerInput.focus(); }, 100);
     }
 
+    function closeModal() { modalOverlay.classList.remove('open'); }
 
-    // =========================================
-    // MODAL KAPAT
-    // =========================================
-
-    function closeModal() {
-
-      modalOverlay.classList.remove('open');
-
-    }
-
-
-    // İptal
-
-    cancelBtn.addEventListener(
-      'click',
-      closeModal
-    );
-
-
-    // =========================================
-    // CEVAP GÖNDER
-    // =========================================
-
-    submitBtn.addEventListener(
-      'click',
-      checkAnswer
-    );
-
-
-    // Enter ile cevaplama
-
-    answerInput.addEventListener(
-      'keypress',
-      (e) => {
-
-        if (e.key === 'Enter') {
-
-          checkAnswer();
-
-        }
-
-      }
-    );
-
-
-    // =========================================
-    // CEVABI KONTROL ET
-    // =========================================
+    cancelBtn.addEventListener('click', closeModal);
+    submitBtn.addEventListener('click', checkAnswer);
+    answerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkAnswer(); });
 
     function checkAnswer() {
+        const userAnswer = answerInput.value.trim().toLowerCase();
+        const correctList = answers[selectedPinId] || [];
 
-      const userAnswer =
-        answerInput.value
-          .trim()
-          .toLowerCase();
+        if (correctList.includes(userAnswer)) {
+            showStatus(`Tebrikler!`, "success");
+            const pin = document.querySelector(`.pin[data-id="${selectedPinId}"]`);
+            pin.classList.remove('active');
+            pin.classList.add('correct');
+            completedNumbers.push(selectedPinId);
+            drawnNumber = null;
+            numDisplay.innerText = "-";
+            closeModal();
 
-
-      const correctList =
-        answers[selectedPinId] || [];
-
-
-      // Doğru cevap
-
-      if (
-        correctList.includes(userAnswer)
-      ) {
-
-        showStatus(
-          `Tebrikler!`,
-          "success"
-        );
-
-
-        // Doğru pini bul
-
-        const pin =
-          document.querySelector(
-            `.pin[data-id="${selectedPinId}"]`
-          );
-
-
-        // Aktif animasyonu kaldır
-
-        pin.classList.remove('active');
-
-
-        // Doğru durumuna getir
-
-        pin.classList.add('correct');
-
-
-        // Tamamlananlara ekle
-
-        completedNumbers.push(
-          selectedPinId
-        );
-
-
-        // Yeni numara çekilmesini bekle
-
-        drawnNumber = null;
-
-
-        numDisplay.innerText = "-";
-
-
-        // Modalı kapat
-
-        closeModal();
-
-
-        // Final sorusunda normal doğru sesi yerine yalnızca zafer sesi çalınır.
-        if (completedNumbers.length !== 11) {
-          playSuccessSound();
+            if (completedNumbers.length !== 11) {
+                playSuccessSound();
+            } else {
+                showStatus("Harika! Tüm dağları başarıyla bildiniz! 🏆", "success");
+                playVictorySound();
+            }
+        } else {
+            showStatus("Yanlış", "error");
+            playWrongSound();
+            closeModal();
         }
-
-
-        // =====================================
-        // OYUN BİTTİ Mİ?
-        // =====================================
-
-        if (
-          completedNumbers.length === 11
-        ) {
-
-          showStatus(
-            "Harika! Tüm dağları başarıyla bildiniz! 🏆",
-            "success"
-          );
-
-
-          playVictorySound();
-
-        }
-
-      } else {
-
-        // Yanlış cevap
-
-        showStatus(
-          "Yanlış",
-          "error"
-        );
-
-        playWrongSound();
-
-        closeModal();
-
-      }
-
     }
-
-
-    // =========================================
-    // DURUM MESAJI
-    // =========================================
 
     function showStatus(text, type) {
-
-      statusMsg.innerText =
-        text;
-
-
-      statusMsg.className =
-        `status-msg ${type}`;
-
+        statusMsg.innerText = text;
+        statusMsg.className = `status-msg ${type}`;
     }
-
-  </script>
-
+    </script>
 </body>
 </html>
