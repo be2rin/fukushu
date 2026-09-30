@@ -129,6 +129,44 @@
         }
         #wheelCanvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 0 30px rgba(178, 8, 209, 0.3); }
 
+        /* --- H5P ETKİNLİK KUTUSU --- */
+        .h5p-kutu {
+            width: 100%;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+        }
+        .h5p-kutu-baslik {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 24px;
+            background: rgba(178, 8, 209, 0.12);
+            border-bottom: 1px solid var(--primary-color);
+            color: white;
+            font-size: 1.35rem;
+            font-weight: 700;
+            text-align: left;
+        }
+        .h5p-kutu-baslik i { color: var(--primary-color); }
+        .h5p-iframe-wrapper {
+            width: 100%;
+            height: 760px;
+            background: #fff;
+        }
+        .h5p-iframe-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        @media (max-width: 1000px) {
+            .h5p-iframe-wrapper { height: 650px; }
+        }
+
         /* --- OYUN ALANI DÜZENİ --- */
         .game-container {
             display: flex;
@@ -282,6 +320,8 @@
                 <h1>Teknoloji Temelli Coğrafya</h1>
                 <button class="ders-btn" onclick="webQuestAc()"><i class="fas fa-user-secret"></i> WebQuest Örneği (Dijital Coğrafya Ajanları)</button>
                 <button class="ders-btn" onclick="oyunAc()"><i class="fas fa-mountain"></i> Marmara Bölgesi Dağlar Oyunu</button>
+                <button class="ders-btn" onclick="h5pAc()"><i class="fas fa-images"></i> H5P Görsel Karşılaştırma Etkinliği</button>
+                <button class="ders-btn" onclick="h5pTestAc()"><i class="fas fa-list-check"></i> H5P Test Etkinliği</button>
                 <button class="ders-btn" onclick="alert('Sunum Henüz Hazır Değil.')"><i class="fas fa-file-powerpoint"></i> Sunum</button>
             </div>
 
@@ -400,6 +440,54 @@
                 </div>
             </div>
 
+            <!-- H5P GÖRSEL KARŞILAŞTIRMA ETKİNLİĞİ ALANI -->
+            <div id="h5p-alani" style="display: none;">
+                <div style="text-align: left;">
+                    <button class="back-btn" onclick="dersAc('sistem')">
+                        <i class="fas fa-arrow-left"></i> Listeye Dön
+                    </button>
+                </div>
+
+                <div class="h5p-kutu">
+                    <div class="h5p-kutu-baslik">
+                        <i class="fas fa-images"></i>
+                        <span>H5P Görsel Karşılaştırma Etkinliği</span>
+                    </div>
+                    <div class="h5p-iframe-wrapper">
+                        <iframe
+                            src="./bunu%20ekle.html"
+                            title="H5P Görsel Karşılaştırma Etkinliği"
+                            loading="lazy"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- H5P TEST ETKİNLİĞİ ALANI -->
+            <div id="h5p-test-alani" style="display: none;">
+                <div style="text-align: left;">
+                    <button class="back-btn" onclick="dersAc('sistem')">
+                        <i class="fas fa-arrow-left"></i> Listeye Dön
+                    </button>
+                </div>
+
+                <div class="h5p-kutu">
+                    <div class="h5p-kutu-baslik">
+                        <i class="fas fa-list-check"></i>
+                        <span>H5P Test Etkinliği</span>
+                    </div>
+                    <div class="h5p-iframe-wrapper">
+                        <iframe
+                            src="./bunu%20da%20ekle.html"
+                            title="H5P Test Etkinliği"
+                            loading="lazy"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
             <!-- VİDEO OYNATICI ALANI -->
             <div id="video-oynatici-alani" style="display: none;">
                 <div style="text-align: left;"><button class="back-btn" onclick="dersAc('siyasi')"><i class="fas fa-arrow-left"></i> Listeye Dön</button></div>
@@ -453,6 +541,16 @@
         document.getElementById('ders-sistem').style.display = 'none';
         document.getElementById('oyun-alani').style.display = 'block';
     }
+
+    function h5pAc() {
+        document.getElementById('ders-sistem').style.display = 'none';
+        document.getElementById('h5p-alani').style.display = 'block';
+    }
+    function h5pTestAc() {
+        document.getElementById('ders-sistem').style.display = 'none';
+        document.getElementById('h5p-test-alani').style.display = 'block';
+    }
+
     function wqSekmeAc(sectionId, btn) {
         document.querySelectorAll('.webquest-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.webquest-nav-btn').forEach(b => b.classList.remove('active'));
